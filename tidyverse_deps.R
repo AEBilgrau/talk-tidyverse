@@ -36,7 +36,7 @@ colourScale <- networkD3::JS("d3.scaleOrdinal(d3.schemeCategory20);")
 #colourScale <- networkD3::JS("d3.scaleOrdinal().range([\"#000000\"]);")
 
 js_code <- " d3.select(this).select(\"circle\")\n  .transition().duration(750).attr(\"r\", 20)"
-height <- 550
+height <- 450
 width <- 750
 networkD3::forceNetwork(Links = edgeList,
                         Nodes = nodeList,
