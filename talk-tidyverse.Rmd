@@ -649,7 +649,6 @@ https://purrr.tidyverse.org/
 class: middle
 ### Functional programming
 
---
 * Abstracts away for-loops
 * Consistent interface for working with vectors (incl. lists) and functions
 * Alternative to the `apply` family 
@@ -665,7 +664,8 @@ class: middle
 ### Motivation
 ```{r, echo = -1}
 set.seed(1)
-tbl <- tibble(a = rnorm(10), b = rnorm(10), c = rnorm(10), d = runif(10))
+tbl <- tibble(a = rnorm(10, mean = 100), b = rnorm(10, mean = 100),
+              c = rnorm(10, mean = 100), d = rnorm(10, mean = 100))
 print(tbl)
 ```
 Say we want to compute the standard deviation for each column.
@@ -685,7 +685,7 @@ sd(tbl$d)
 ```{r}
 out <- vector("numeric", ncol(tbl))
 for (i in seq_along(out)) {
-  out[i] <- sd(tbl[[i]])
+  out[i] <- sd(tbl[[i]]) #<<
 }
 out
 ```
@@ -786,6 +786,7 @@ sim %>%
 
 
 ---
+### `reduce` & `accumulate`
 ```{r}
 vs <- list(
   c(1, 3, 5, 6, 10),
@@ -793,14 +794,11 @@ vs <- list(
   c(1, 2, 3, 4, 8, 9, 10)
 )
 vs %>% reduce(intersect)
-```
 
-
----
-```{r}
 x <- c(1,5,2,3)
 x %>% accumulate(`-`)  # cummulative difference
 ```
+
 
 
 
@@ -924,13 +922,11 @@ https://ggplot2.tidyverse.org/
 
 
 .pull-left[
-<!-- ![](img/wilkinson_grammar_of_graphics.png) -->
-<img src="figs/wilkinson_grammar_of_graphics.png" width=300 height=400>
+<img src="figs/gg.png" width=300 height=400>
 ]
 
 .pull-right[
-<!-- ![](https://research.tableau.com/sites/default/files/900x890_Leland.jpg) -->
-<img src="img/leland.jpg" width=300 height=297>
+<img src="figs/wilkinson.png" width=300 height=297>
 ]
 
 .footnote[
@@ -961,9 +957,9 @@ kableExtra::kable_styling(knitr::kable(tbl), font_size = 18)
 
 ```{r, echo = FALSE}
 plot(1, axes = FALSE, type = "n", xlab = "<axis label>", ylab = "<axis label>")
+grid(col = "#000000FF")
 axis(1, at = axTicks(1), labels = rep("<tick lab>", length(axTicks(1))))
 axis(2, at = axTicks(2), labels = rep("<tick lab>", length(axTicks(2))))
-grid()
 ```
 
 ]
@@ -1058,6 +1054,8 @@ class: middle, center
 * non-cartesian coordiante systems
 
 ---
+class: middle
+
 ```{r, eval = FALSE}
 ggplot(data = <DATA>) +
   <geom_function>(
@@ -1075,24 +1073,24 @@ ggplot(data = <DATA>) +
 
 
 ---
-```{r, message=FALSE}
+```{r, message=FALSE, out.width = "100%", out.height="400px"}
 it <- map_data("italy")
-ggplot(data = it, mapping = aes(long, lat, group = group)) +
-  geom_polygon(fill = "white", color = "black") +
+ggplot(it, mapping = aes(long, lat, group=group)) +
+  geom_polygon(color = "black", fill = "white") +
   coord_quickmap()
 ```
 
 
 ---
-```{r}
-ggplot(data = it, mapping = aes(long, lat, group = group, fill = region))+
+```{r, out.width = "100%", out.height="400px"}
+ggplot(it, mapping = aes(long, lat, group=group, fill=region))+
   geom_polygon(color = "black", show.legend = FALSE) +
   coord_quickmap()
 ```
 
 ---
-```{r}
-ggplot(data = it %>% filter(group <= 6), 
+```{r, out.width = "100%", out.height="400px"}
+ggplot(it %>% filter(group <= 6), 
        mapping = aes(long, lat, group = group, fill = region))+
   geom_polygon(color = "black", show.legend = FALSE) +
   coord_quickmap() +
