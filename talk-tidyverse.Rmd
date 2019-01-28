@@ -16,9 +16,6 @@ output:
 
 
 
-
-
-
 ---
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE,
@@ -55,8 +52,8 @@ https://tidyverse.tidyverse.org/
 
 ???
 
-The definitive guide and descriptions are found at tidyverse.org.
-If you need 1 take home message, go and read here.
+The definitive guide and descriptions are found at tidyverse.org.  In fact, the majority of this presentation is borrowed from the official sources.
+If you need 1 take home message, it should be "tidyverse.org"
 
 The content on the intenet is great.
 I should also disclaim, that I am no `tidyverse` expert.
@@ -629,6 +626,15 @@ WHO_tuberculosis %>%
 
 
 
+
+
+
+
+
+
+
+
+
 ---
 class: center, middle, inverse
 
@@ -637,6 +643,172 @@ class: center, middle, inverse
 .footnote[
 https://purrr.tidyverse.org/
 ]
+
+
+---
+class: middle
+### Functional programming
+
+--
+* Abstracts away for-loops
+* Consistent interface for working with vectors (incl. lists) and functions
+* Alternative to the `apply` family 
+
+???
+
+* Code should be easier to read and reason about
+* Downside, I think it gets quite complex quit easily (but I'm not used to reason that way)
+
+
+
+---
+### Motivation
+```{r, echo = -1}
+set.seed(1)
+tbl <- tibble(a = rnorm(10), b = rnorm(10), c = rnorm(10), d = runif(10))
+print(tbl)
+```
+Say we want to compute the standard deviation for each column.
+
+
+---
+### Motivation (cont)
+```{r}
+sd(tbl$a)
+sd(tbl$b)
+sd(tbl$c)
+sd(tbl$d)
+```
+
+---
+### Motivation (cont)
+```{r}
+out <- vector("numeric", ncol(tbl))
+for (i in seq_along(out)) {
+  out[i] <- sd(tbl[[i]])
+}
+out
+```
+
+
+---
+### Motivation (cont)
+```{r}
+out2 <- sapply(tbl, sd)
+out2
+```
+
+---
+### Motivation (cont)
+```{r}
+out3 <- purrr::map(tbl, sd)  # basically identical with lapply
+out3
+```
+
+---
+### Motivation (cont)
+```{r}
+out4 <- purrr::map_dbl(tbl, sd)
+out4
+```
+
+---
+### Motivation (cont)
+```{r}
+out5 <- purrr::map_chr(tbl, sd)
+out5
+```
+
+
+---
+### Remember tibbles (and data.frames) are lists
+```{r}
+mtcars %>%
+  split(.$cyl) %>% # from base R
+  map(~ lm(mpg ~ wt, data = .)) %>%
+  map(summary) %>%
+  map_dbl("r.squared")
+```
+
+
+
+???
+
+<!-- from https://purrr.tidyverse.org/ -->
+* The first argument is always the data, so `purrr` works naturally with the pipe.
+All purrr functions are type-stable. 
+* They always return the advertised output type (map() returns lists; map_dbl() returns double vectors), or they throw an error.
+* All map() functions either accept function, formulas (used for succinctly generating anonymous functions), a character vector (used to extract components by name), or a numeric vector (used to extract by position).
+
+
+
+---
+class: middle
+
+### Multivariate map
+```{r}
+mu <- list(5, 10, -3)
+sigma <- list(1, 3, 6)
+map2(mu, sigma, rnorm, n = 4)
+```
+
+* `pmap` generalizes `map2` this to p-arguments (to avoid `map3`, `map4`, ...)
+
+
+
+---
+#### Invoking different functions
+
+```{r}
+f <- c("runif", "rnorm", "rpois")
+param <- list(
+  list(min = -1, max = 1), 
+  list(sd = 5), 
+  list(lambda = 10)
+)
+invoke_map(f, param, n = 5) 
+```
+
+---
+#### Works well with `tibbles`
+```{r}
+sim <- tribble(
+  ~f,      ~params,
+  "runif", list(min = -1, max = 1),
+  "rnorm", list(sd = 5),
+  "rpois", list(lambda = 10)
+)
+print(sim)
+sim %>% 
+  mutate(sim = invoke_map(f, params, n = 10))
+```
+
+
+
+---
+```{r}
+vs <- list(
+  c(1, 3, 5, 6, 10),
+  c(1, 2, 3, 7, 8, 10),
+  c(1, 2, 3, 4, 8, 9, 10)
+)
+vs %>% reduce(intersect)
+```
+
+
+---
+```{r}
+x <- c(1,5,2,3)
+x %>% accumulate(`-`)  # cummulative difference
+```
+
+
+
+
+
+
+
+
 
 
 
@@ -739,7 +911,201 @@ https://ggplot2.tidyverse.org/
 
 ???
 
+* Now over 10 years old
 * Probably needs a separate presentation.
+
+
+
+
+
+
+---
+### Foundations
+
+
+.pull-left[
+<!-- ![](img/wilkinson_grammar_of_graphics.png) -->
+<img src="figs/wilkinson_grammar_of_graphics.png" width=300 height=400>
+]
+
+.pull-right[
+<!-- ![](https://research.tableau.com/sites/default/files/900x890_Leland.jpg) -->
+<img src="img/leland.jpg" width=300 height=297>
+]
+
+.footnote[
+http://vita.had.co.nz/papers/layered-grammar.html
+]
+
+
+
+
+---
+class: center, middle
+
+#### Data
+<!-- ![](img/data.png) -->
+```{r tbl, echo = FALSE}
+n <- 4
+set.seed(1)
+tbl <- tibble::tibble(A = rep(" ", n), B =  " ", C = " ", D = " ", E = " ")
+kableExtra::kable_styling(knitr::kable(tbl), font_size = 18)
+```
+
+
+
+.pull-left[
+
+#### Coordinate system
+<!-- ![](img/coordinate_sys.png) -->
+
+```{r, echo = FALSE}
+plot(1, axes = FALSE, type = "n", xlab = "<axis label>", ylab = "<axis label>")
+axis(1, at = axTicks(1), labels = rep("<tick lab>", length(axTicks(1))))
+axis(2, at = axTicks(2), labels = rep("<tick lab>", length(axTicks(2))))
+grid()
+```
+
+]
+
+.pull-right[         
+#### Aesthetics
+
+```{r, echo = FALSE}             
+n <- 3                          
+m <- 3
+o <- n*m                                         
+mat <- matrix(seq_len(o), n, m)
+plot(c(col(mat)), 
+     c(row(mat)),         
+     xlim = c(0, n + 1),
+     ylim = c(0, m + 1),
+     pch = c(0, 1, 2, 15, 16, 17, 22, 21, 24),
+     col = c(rep("grey", m), 
+             c("steelblue", "tomato", "seagreen2"),
+             rep("black", m)),
+     bg = c(rep("grey", m), 
+             c("steelblue", "tomato", "seagreen2"),
+             c("steelblue", "tomato", "seagreen2")),
+     lwd = 3,
+     cex = 6,
+     axes = FALSE, 
+     xlab = "", 
+     ylab = "")
+```
+
+]
+
+
+???
+
+* The core elements of the grammar of graphics
+* Aesthetics also called "geoms"
+
+
+
+---
+class: middle
+
+```{r, eval = FALSE}
+ggplot(data = <DATA>) +
+  <geom_function>(mapping = aes(<aesthetics_mappings>))
+```
+
+
+---
+class: middle
+
+```{r, fig.align='center', dev="png", out.width='100%', fig.height=4, fig.width=7, dev='svg'}
+my_mtcars <- mtcars %>% mutate(cyl = fct_rev(factor(cyl)))
+ggplot(data = my_mtcars) +
+  geom_point(mapping = aes(x = disp, y = mpg, col = cyl))
+```
+
+???
+
+* Notice the "pipe" is "+". But it is not a pipe
+
+
+---
+class: middle
+
+```{r, fig.align='center', dev="png", out.width='100%', fig.height=4, fig.width=7, dev='svg'}
+ggplot(data = my_mtcars) +
+  geom_point(mapping = aes(x = disp, y = mpg, col = cyl, 
+                           shape = cyl, size = hp))
+```
+
+???
+
+The coordinate system is by default the cartesian
+
+---
+class: middle, center
+
+### More grammar...
+
+`facet`
+
+`position` 
+
+`stat`
+
+???
+
+* position e.g. maps to bar plots
+* stats: statistical transformations (mean, median, etc)
+* non-cartesian coordiante systems
+
+---
+```{r, eval = FALSE}
+ggplot(data = <DATA>) +
+  <geom_function>(
+    mapping = aes(<aesthetics_mappings>),
+    stat = <stat>,
+    position = <postion>
+  ) +
+  <coordinate_function>() +
+  <facet_function>()
+```
+
+???
+
+* There's lots more to it...
+
+
+---
+```{r, message=FALSE}
+it <- map_data("italy")
+ggplot(data = it, mapping = aes(long, lat, group = group)) +
+  geom_polygon(fill = "white", color = "black") +
+  coord_quickmap()
+```
+
+
+---
+```{r}
+ggplot(data = it, mapping = aes(long, lat, group = group, fill = region))+
+  geom_polygon(color = "black", show.legend = FALSE) +
+  coord_quickmap()
+```
+
+---
+```{r}
+ggplot(data = it %>% filter(group <= 6), 
+       mapping = aes(long, lat, group = group, fill = region))+
+  geom_polygon(color = "black", show.legend = FALSE) +
+  coord_quickmap() +
+  facet_wrap(~ region)
+```
+
+
+
+
+
+
+
+
 
 
 
