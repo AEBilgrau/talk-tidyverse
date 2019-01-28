@@ -14,8 +14,6 @@ output:
 
 
 
-
-
 ---
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE,
@@ -197,14 +195,16 @@ print(AirPassengers) # Monthly Airline Passenger Numbers 1949-1960
 
 ---
 
-# `%>%`
+## `%>%`
 
-#### `value %>% function(...)` 
-is equivalent to
-#### `function(value, ...)`
+The following are equivalent
 
-    Univariate f:    x %>% f  is the same as  f(x) 
-    Multivariate g:  x %>% g  is the same as  g(x, y, ...)
+- `value %>% f(...)`
+- `f(value, ...)`
+
+
+      Univariate f:    x %>% f          is the same as  f(x)
+      Multivariate g:  x %>% g(y, ...)  is the same as  g(x, y, ...)
 
 ```{r}
 iris %>% 
@@ -212,7 +212,7 @@ iris %>%
   head(n=2)
 ```
 ```{r, eval=FALSE} 
-head(subset(iris, Species == "setosa", select = names(iris)[-4]), n = 2) # The same
+head(subset(iris, Species=="setosa", select = names(iris)[-4]), n=2)
 ```
 
 
