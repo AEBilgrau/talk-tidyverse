@@ -1056,6 +1056,8 @@ class: middle, center
 ---
 class: middle
 
+### Grammar of layered graphics
+
 ```{r, eval = FALSE}
 ggplot(data = <DATA>) +
   <geom_function>(
@@ -1073,6 +1075,7 @@ ggplot(data = <DATA>) +
 
 
 ---
+class: middle
 ```{r, message=FALSE, out.width = "100%", out.height="400px"}
 it <- map_data("italy")
 ggplot(it, mapping = aes(long, lat, group=group)) +
@@ -1082,6 +1085,7 @@ ggplot(it, mapping = aes(long, lat, group=group)) +
 
 
 ---
+class: middle
 ```{r, out.width = "100%", out.height="400px"}
 ggplot(it, mapping = aes(long, lat, group=group, fill=region))+
   geom_polygon(color = "black", show.legend = FALSE) +
@@ -1089,13 +1093,15 @@ ggplot(it, mapping = aes(long, lat, group=group, fill=region))+
 ```
 
 ---
-```{r, out.width = "100%", out.height="400px"}
+class: middle
+```{r, fig.width = 8, fig.height = 4, out.width = "100%"}
 ggplot(it %>% filter(group <= 6), 
        mapping = aes(long, lat, group = group, fill = region))+
   geom_polygon(color = "black", show.legend = FALSE) +
   coord_quickmap() +
   facet_wrap(~ region)
 ```
+
 
 
 
