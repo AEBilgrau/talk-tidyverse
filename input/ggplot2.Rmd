@@ -1,0 +1,219 @@
+class: center, middle, inverse
+
+# [`ggplot2`](https://ggplot2.tidyverse.org/)
+
+.footnote[
+https://ggplot2.tidyverse.org/
+]
+
+???
+
+* Now over 10 years old
+* Probably needs a separate presentation.
+
+
+
+
+
+
+---
+### Foundations
+
+
+.pull-left[
+<img src="figs/gg.png" width=300 height=400>
+]
+
+.pull-right[
+<img src="figs/wilkinson.png" width=300 height=297>
+]
+
+.footnote[
+http://vita.had.co.nz/papers/layered-grammar.html
+]
+
+
+
+
+---
+class: center, middle
+
+#### Data
+<!-- ![](img/data.png) -->
+```{r tbl, echo = FALSE}
+n <- 4
+set.seed(1)
+tbl <- tibble::tibble(A = rep(" ", n), B =  " ", C = " ", D = " ", E = " ")
+kableExtra::kable_styling(knitr::kable(tbl), font_size = 18)
+```
+
+
+
+.pull-left[
+
+#### Coordinate system
+<!-- ![](img/coordinate_sys.png) -->
+
+```{r, echo = FALSE}
+plot(1, axes = FALSE, type = "n", xlab = "<axis label>", ylab = "<axis label>")
+grid(col = "#000000FF")
+axis(1, at = axTicks(1), labels = rep("<tick lab>", length(axTicks(1))))
+axis(2, at = axTicks(2), labels = rep("<tick lab>", length(axTicks(2))))
+```
+
+]
+
+.pull-right[         
+#### Aesthetics
+
+```{r, echo = FALSE}             
+n <- 3                          
+m <- 3
+o <- n*m                                         
+mat <- matrix(seq_len(o), n, m)
+plot(c(col(mat)), 
+     c(row(mat)),         
+     xlim = c(0, n + 1),
+     ylim = c(0, m + 1),
+     pch = c(0, 1, 2, 15, 16, 17, 22, 21, 24),
+     col = c(rep("grey", m), 
+             c("steelblue", "tomato", "seagreen2"),
+             rep("black", m)),
+     bg = c(rep("grey", m), 
+             c("steelblue", "tomato", "seagreen2"),
+             c("steelblue", "tomato", "seagreen2")),
+     lwd = 3,
+     cex = 6,
+     axes = FALSE, 
+     xlab = "", 
+     ylab = "")
+```
+
+]
+
+
+???
+
+* The core elements of the grammar of graphics
+* Aesthetics also called "geoms"
+
+
+
+---
+class: middle
+
+```{r, eval = FALSE}
+ggplot(data = <DATA>) +
+  <geom_function>(mapping = aes(<aesthetics_mappings>))
+```
+
+
+---
+class: middle
+
+```{r, fig.align='center', dev="png", out.width='100%', fig.height=4, fig.width=7, dev='svg'}
+my_mtcars <- mtcars %>% mutate(cyl = fct_rev(factor(cyl)))
+ggplot(data = my_mtcars) +
+  geom_point(mapping = aes(x = disp, y = mpg, col = cyl))
+```
+
+???
+
+* Notice the "pipe" is "+". But it is not a pipe
+
+
+---
+class: middle
+
+```{r, fig.align='center', dev="png", out.width='100%', fig.height=4, fig.width=7, dev='svg'}
+ggplot(data = my_mtcars) +
+  geom_point(mapping = aes(x = disp, y = mpg, col = cyl, 
+                           shape = cyl, size = hp))
+```
+
+???
+
+The coordinate system is by default the cartesian
+
+---
+class: middle, center
+
+### More grammar...
+
+`facet`
+
+`position` 
+
+`stat`
+
+???
+
+* position e.g. maps to bar plots
+* stats: statistical transformations (mean, median, etc)
+* non-cartesian coordiante systems
+
+---
+class: middle
+
+### Grammar of layered graphics
+
+```{r, eval = FALSE}
+ggplot(data = <DATA>) +
+  <geom_function>(
+    mapping = aes(<aesthetics_mappings>),
+    stat = <stat>,
+    position = <postion>
+  ) +
+  <coordinate_function>() +
+  <facet_function>()
+```
+
+???
+
+* There's lots more to it...
+
+
+---
+class: middle
+```{r, message=FALSE, out.width = "100%", out.height="400px"}
+it <- map_data("italy")
+ggplot(it, mapping = aes(long, lat, group=group)) +
+  geom_polygon(color = "black", fill = "white") +
+  coord_quickmap()
+```
+
+
+---
+class: middle
+```{r, out.width = "100%", out.height="400px"}
+ggplot(it, mapping = aes(long, lat, group=group, fill=region))+
+  geom_polygon(color = "black", show.legend = FALSE) +
+  coord_quickmap()
+```
+
+---
+class: middle
+```{r, fig.width = 8, fig.height = 4, out.width = "100%"}
+ggplot(it %>% filter(group <= 6), 
+       mapping = aes(long, lat, group = group, fill = region))+
+  geom_polygon(color = "black", show.legend = FALSE) +
+  coord_quickmap() +
+  facet_wrap(~ region)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

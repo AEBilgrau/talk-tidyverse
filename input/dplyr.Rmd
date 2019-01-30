@@ -1,0 +1,143 @@
+class: center, middle, inverse
+
+# [`dplyr`](https://dplyr.tidyverse.org/)
+
+.footnote[
+https://dplyr.tidyverse.org/
+]
+
+???
+
+* dplyr is a grammar of data maninulation *on tidy data*
+* (Relatively) consistent
+* Provide few 'verbs' to do most things --- one-way philosophy
+* Fast, not not built for speed. `data.table` might be better here.
+
+From the docs:pp
+
+> * Identify the most important data manipulation verbs and make them easy to use from R.
+> * Provide blazing fast performance for in-memory data by writing key pieces in C++ (using Rcpp)
+> * Use the same interface to work with data no matter where it's stored, whether in a data frame, a data table or database.
+
+---
+### dplyr overview
+
+Core functionalty:
+
+* `select()` columns
+* `filter()` rows
+* `arrange()` / sort rows
+* `mutate()` and `transmute()`: add new columns
+
+Reduce/summarize (groups of) rows with:
+
+* `summarise()`, `summarize()`
+
+and 
+
+* `group_by()`, `ungroup()`
+
+
+
+---
+### `mtcars`
+
+
+```{r}
+mtcars %>% print(n = 5, width = 60)
+```
+
+---
+### Basic dplyr in action
+```{r}
+mtcars %>% 
+  filter(cyl %>% between(4,6)) #<<
+```
+
+???
+
+* `filter` has helper functions `between`, `near`, ``xor`
+
+---
+### Basic dplyr in action
+```{r}
+mtcars %>% 
+  filter(cyl %>% between(4,6)) %>% 
+  select(car, mpg:wt, -drat) # also supports -(colX:colY)  #<<
+```
+
+???
+
+* `select` has helper functions `starts_with`, `ends_with`, `contains`, `matches`
+
+
+---
+### Basic dplyr in action
+```{r}
+mtcars %>% 
+  filter(cyl %>% between(4,6)) %>% 
+  select(car, mpg:wt, -drat) %>%
+  mutate(wt = 0.45*wt, `hp/wt` = hp/wt) #<<
+```
+
+???
+
+* `mutate` supports multiple new columns, created in order
+    - mtcars %>% mutate(cyl_disp_ccm = 16.387064*disp/cyl, cyl_disp_L = cyl_disp_ccm/1000)
+* `mutate` has helper functions `cumall`, `cumany`, `recode`, `case_when`, `percent_rank`
+* `transmute` would just return the derived value
+
+---
+### Basic dplyr in action
+```{r}
+mtcars %>% 
+  filter(cyl %>% between(4,6)) %>%
+  select(car, mpg:wt, -drat) %>%
+  mutate(wt = 0.45*wt, `hp/wt` = hp/wt) %>%
+  arrange(desc(`hp/wt`)) #<<
+```
+
+---
+### Basic dplyr in action
+```{r}
+mtcars %>% 
+  filter(cyl %>% between(4,6)) %>% 
+  select(car, mpg:wt, -drat) %>%
+  mutate(wt = 0.45*wt, `hp/wt` = hp/wt) %>% 
+  arrange(desc(`hp/wt`)) %>% 
+  group_by(cyl) #<<
+```
+
+---
+### Basic dplyr in action
+```{r}
+mtcars %>% 
+  filter(cyl %>% between(4,6)) %>% 
+  select(car, mpg:wt, -drat) %>%
+  mutate(wt = 0.45*wt, `hp/wt` = hp/wt) %>%
+  arrange(desc(`hp/wt`)) %>% 
+  group_by(cyl) %>%  
+  summarize(mean_hpwt = mean(`hp/wt`), tanh = tanh(mean_hpwt)) #<<
+```
+
+???
+
+* Doing the above it "[" would be a nightmare in comparison
+* Again lazy evaluation, in order is generally supported.
+* 'Context-refence' (NSE as Janus talked about last time)
+
+---
+class: center, middle
+
+# [`dbplyr`](https://dbplyr.tidyverse.org/)
+
+.footnote[
+https://dbplyr.tidyverse.org/
+]
+
+???
+
+* `dbplyr` is a database backend for `dplyr`
+* Unlike "[", it abstracts away how the data is stored
+* Converts `dplyr` code to SQL calls
+* Expressions are lazily evaluated and `dplyr` pipes generate SQL, which is sent to the DB only when requested.

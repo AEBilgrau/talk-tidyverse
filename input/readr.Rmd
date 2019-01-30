@@ -1,0 +1,48 @@
+class: center, middle, inverse
+
+# [`readr`](https://readr.tidyverse.org/)
+
+.footnote[
+https://readr.tidyverse.org/
+]
+
+
+---
+class: middle
+
+```{r}
+mtcars <- read_csv(readr_example("mtcars.csv"))
+mtcars$car <- rownames(datasets::mtcars)
+```
+
+#### Features:
+* Returns tibbles
+* Allegedly 10x faster than base **R**  
+* Strings are parsed as-is (not more `stringsAsFactors = FALSE`)
+* Parses common data-time formats
+* Progress indicator for large files
+* Do not depend on locale (US default)
+
+???
+
+* `file` Either a path to a file, a connection, or literal data
+* Argument `col_types` accepts the copy-paste of the output.
+
+---
+class: middle
+
+#### `readr` supports:
+
+```{r, eval=FALSE}
+read_csv()    # comma separated (CSV) files
+read_tsv()    # tab separated files
+read_delim()  # general delimited files
+read_fwf()    # fixed width files
+read_table()  # tabular files with white-space separated columns
+read_log()    # web log files
+```
+
+
+
+
+

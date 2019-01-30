@@ -1,0 +1,79 @@
+class: center, middle, inverse
+
+# [`stringr`](https://stringr.tidyverse.org/)
+
+.footnote[
+https://stringr.tidyverse.org/
+]
+
+
+---
+class: middle
+
+### Consistent string manipulation functions
+* `str_` prefixed functions
+
+```{r}
+ls("package:stringr")
+```
+
+???
+  
+* Consistent interface to string manipulation
+* Of course 
+
+---
+  class: middle
+
+```{r}
+ls("package:stringr") %>% head(n = 18) %>% 
+str_view_all("str_|ex")
+```
+
+???
+  
+* I want to highlight `str_view_all` which brings up a html_widget to show matches.
+- Helpful when making a regex
+
+
+
+
+
+---
+class: center, middle, inverse
+
+# [`forcats`](https://forcats.tidyverse.org/)
+
+.footnote[
+https://forcats.tidyverse.org/
+]
+
+???
+  
+>  The goal of the `forcats` package is to provide a suite of tools that solve common problems with factors, including changing the order of levels or the values. 
+
+
+---
+  
+###  Consistent manipulating of factors
+  
+  
+```{r}
+ls("package:forcats")
+```
+
+
+---
+```{r, }
+fct_explicit_na( factor(c("A","B",NA)) )
+fct_c( factor(c("A","B") ), factor(c("B","C")) )
+fct_rev( factor(c("A","B")) )
+fct_drop( factor(c("A","B", NA), levels = c("A","B","C")) )
+fct_anon (factor(c("A","B",NA)) , prefix = "cat" )
+```
+
+???
+  
+* Some forcats examples
+
+

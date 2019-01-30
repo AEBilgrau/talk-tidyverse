@@ -1,0 +1,197 @@
+
+class: center, middle
+# [tidyverse.org](https://tidyverse.org)
+
+#### Everything is found here
+
+.footnote[
+https://tidyverse.org/ <br>
+https://tidyverse.tidyverse.org/
+]
+
+
+
+???
+
+The definitive guide and descriptions are found at tidyverse.org.  In fact, the majority of this presentation is borrowed from the official sources.
+If you need 1 take home message, it should be "tidyverse.org"
+
+The content on the intenet is great.
+I should also disclaim, that I am no `tidyverse` expert.
+I read (some of) this stuff so you do not have to.
+
+### Shortcuts:
+* `h` for help
+* `number` + `Enter` go to page
+* `b` for "black-out"
+* `m` for "mirror"
+* `f` to toggle full-screen 
+* `c` for clone slides to a new browser window; slides in the two windows will be in sync as you navigate through them
+* `p` for presenters mode 
+
+
+
+
+---
+class: middle, center
+
+# Thank you
+
+
+
+---
+class: middle
+
+```{r, comment = " "}
+library(tidyverse)
+tidyverse_logo()
+```
+
+
+???
+
+Tidyverse is simply a collection of 8 core package with which share common design principles.
+Or, more bluntly out: 'all the nice stuff from Hadley Wickham and co. at Rstudio'.
+
+Each package probably warrents it's one presentation.
+
+
+
+---
+class: center
+
+#### The `tidyverse` dependencies
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+source("tidyverse_deps.R")$value
+```
+
+.left[
+Press `ctrl`+`R` or `F5`
+]
+
+
+---
+# A common design philsophy
+
+
+* A shared concept of *tidy data*; the *tidy*verse, not the *messy*verse
+     * Programs are for humans to read
+     * Embrace functional programming
+     * Use and reuse existing data structures
+     * Compose simple functions with the pipe
+
+* "There should be one, and preferably only one, obvious way to do it."
+
+    * The **R** core team's philosophy is fundamentatlly different.
+
+.footnote[
+https://principles.tidyverse.org/ <br>
+https://github.com/tidyverse/principles/issues <br>
+https://tidyverse.tidyverse.org/articles/manifesto.html
+]
+
+???
+
+* The traditional way of manipulating data in R is quite different from this
+* That obvious way may not be obvious at first.
+* R core team says: many ways to do the same thing.
+* The grammar of graphics
+
+---
+# What is *tidy data*?
+
+> Happy families are all alike; every unhappy family is unhappy in its own way.
+> .right[*Leo Tolstoy*]
+
+Data is *tidy* **if**:
+1. Each variable forms a column.
+2. Each observation forms a row.
+3. Each type of observational unit forms a table. (A value must have it own cell)
+
+
+.footnote[
+Wickham, H. (2014). Tidy Data. Journal of Statistical Software, 59(10), 1-23. doi:http://dx.doi.org/10.18637/jss.v059.i10
+]
+
+???
+
+* Speaks only toward 'rectcangular data' --- there is lots of data that is not naturally rectangular.
+* Some 80% of data analysis is used on cleaning and preparing data (Dasu and Johnson 2003)
+* You feel that the 1--2 is tautological, but if you think long-vs-wide tables it should be apparent it is not.
+* It is sometimes surprisingly difficult to precisely define variables and observations.
+    * Rule of thumb: it's easier to describe functional relationships between variables than between rows, 
+    * it is easier to make comparisons between groups of observations than between groups of columns. 
+
+
+---
+# What is **not** tidy data?
+
+>* Column headers are values, not variable names.
+>* Multiple variables are stored in one column.
+>* Variables are stored in both rows and columns.
+>* Multiple types of observational units are stored in the same table.
+>* A single observational unit is stored in multiple tables.
+
+* Contingency tables / *n*-factor tabulation arrays
+
+.footnote[
+Wickham, H. (2014) http://dx.doi.org/10.18637/jss.v059.i10
+]
+
+???
+
+
+
+
+---
+class: middle
+
+### Tidy?
+```{r}
+print(AirPassengers) # Monthly Airline Passenger Numbers 1949-1960
+```
+                
+
+
+
+
+---
+
+## `%>%`
+
+The following are equivalent
+
+- `value %>% f(...)`
+- `f(value, ...)`
+
+
+      Univariate f:    x %>% f          is the same as  f(x)
+      Multivariate g:  x %>% g(y, ...)  is the same as  g(x, y, ...)
+
+```{r}
+iris %>% 
+  subset(Species == "setosa", select = names(.)[-4]) %>%
+  head(n=2)
+```
+```{r, eval=FALSE} 
+head(subset(iris, Species=="setosa", select = names(iris)[-4]), n=2)
+```
+
+
+???
+
+Called the pipe operator; performs function composition.
+From the pacakge `magrittr`; adopted by `tidyverse`.
+Can give some expressive code by daisy chaining pipes.
+The dot `.` can be used as placeholder to place the left hand size elsewhere or use
+the `value` for other purposes.
+
+
+
+
+
+
+
+
+

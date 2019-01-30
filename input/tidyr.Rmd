@@ -1,0 +1,118 @@
+class: center, middle, inverse
+
+# [`tidyr`](https://tidyr.tidyverse.org/)
+
+.footnote[
+https://tidyr.tidyverse.org/
+]
+
+
+---
+class: center, middle
+
+> The goal of `tidyr` is to help you create **tidy data**.
+
+.footnote[
+https://tidyr.tidyverse.org/
+]
+
+
+
+---
+### Key tidyr functions
+
+* `gather()`: *gathers* ultiple columns into two key-value columns
+  - i.e. wide to long format
+
+* `spread()`: *spreads* two columns (key & value) into multiple columns
+  - i.e. long to wide format
+
+* `separate()`: pulls apart one `character` column into many (inverse of `unite()`)
+  - `separate_rows` separate into extra rows
+  
+* `extract()`: similar, but uses regex to capture groups
+
+
+???
+
+* Alternative to `reshape` and `reshape2` packages.
+
+
+
+---
+### Other tidying
+#### Handle missing values
+* `drop_na()`  filters `NA`
+* `fill()`  fills `NA` with most recent non-`NA` (from top og bottom)
+* `replace_na()`
+* `complete()`: Expand current tibble to make missing values explicit
+* `expand()`: Creates a new tibble (like `expand.grid`)
+
+
+---
+### tidyr in action
+```{r, echo = -1}
+WHO_tuberculosis <- table5[-6, ]
+WHO_tuberculosis #<<
+```
+
+.footnote[
+http://www.who.int/tb/country/data/download/en/
+`tidyr::table5`
+]
+
+---
+### tidyr in action
+```{r}
+WHO_tuberculosis %>% 
+  unite(col = "year", century, year, sep = "")   #<<
+```
+
+---
+### tidyr in action
+```{r}
+WHO_tuberculosis %>% 
+  unite(col = "year", century, year, sep = "") %>% 
+  separate(rate, into = c("cases", "pop"))  #<<
+```
+
+---
+### tidyr in action
+```{r}
+WHO_tuberculosis %>% 
+  unite(col = "year", century, year, sep = "") %>% 
+  separate(rate, into = c("cases", "pop")) %>% 
+  gather(cases, pop, key = type, value = count) #<<
+```
+
+---
+### tidyr in action
+```{r}
+WHO_tuberculosis %>% 
+  unite(col = "year", century, year, sep = "") %>% 
+  separate(rate, into = c("cases", "pop")) %>% 
+  gather(cases, pop, key = type, value = count) %>% 
+  complete(country, year, type) #<<
+```
+
+---
+### tidyr in action
+```{r}
+WHO_tuberculosis %>% 
+  unite(col = "year", century, year, sep = "") %>% 
+  separate(rate, into = c("cases", "pop")) %>% 
+  gather(cases, pop, key = type, value = count) %>% 
+  complete(country, year, type) %>% 
+  replace_na() #<<
+```
+
+
+
+
+
+
+
+
+
+
+

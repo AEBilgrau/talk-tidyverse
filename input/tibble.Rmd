@@ -1,0 +1,69 @@
+class: center, middle, inverse
+
+# [`tibble`](https://tibble.tidyverse.org/)
+
+.footnote[
+https://tibble.tidyverse.org/
+]
+
+
+
+---
+### tibbles
+
+```{r}
+tbl <- tibble(x = 1:50, y = exp(x), w = y > 1, char = "AaRUG")
+tbl
+class(tbl)
+```
+
+???
+
+Much like the data.frame but with all the annoying stuff taken away.
+Creating tibbles are covered in syntactic sugar.
+It extends the data.frame; but actually "dumber."
+All tibbles are data.frames; but not all data.frames are tibbles.
+
+They feature:
+* Better printing
+* Only recycles length 1 inputs.
+* Evaluates its arguments lazily and in order.
+* Never coerces inputs (i.e. strings stay as strings!).
+* Never adds row.names.
+* Never munges column names.
+* Adds tbl_df class to output.
+* Automatically adds column names.
+
+
+
+---
+### tibbles (cont.)
+
+Subsetting via "[" does not "drop". Subsetting with "$" does.
+```{r}
+tbl[25, ]
+print(tbl[, "y"], n = 3)
+str(tbl$y)
+```
+
+
+---
+### tibbles (cont.)
+
+Also no partial matching!
+
+```{r}
+tbl$ch
+data.frame(a = 1, char = "test")$ch
+```
+
+
+
+### tibbles do less and compain more
+
+???
+
+Hopefully this should lead to more expressive code and confront problems
+
+
+
