@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>An introduction to</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Anders Ellern Bilgrau" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <script src="libs/d3/d3.min.js"></script>
+    <script src="libs/forceNetwork-binding/forceNetwork.js"></script>
+    <link href="libs/str_view/str_view.css" rel="stylesheet" />
+    <script src="libs/str_view-binding/str_view.js"></script>
+    <script src="libs/kePrint/kePrint.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <font size='3'>An introduction to</font>
+## <code>tidyverse</code>
+### <a href='https://github.com/AEBilgrau'>Anders Ellern Bilgrau</a>
+### <font size='3'>User group meeting 2019-01-28</font><br><font size='1'>(last updated: 2019-01-30)</font>
+
+---
+
+
+
+
+
+
+class: center, middle
+# [tidyverse.org](https://tidyverse.org)
+
+#### Everything is found here
+
+.footnote[
+https://tidyverse.org/ &lt;br&gt;
+https://tidyverse.tidyverse.org/
+]
+
+
+
+???
+
+The definitive guide and descriptions are found at tidyverse.org.  In fact, the majority of this presentation is borrowed from the official sources.
+If you need 1 take home message, it should be "tidyverse.org"
+
+The content on the intenet is great.
+I should also disclaim, that I am no `tidyverse` expert.
+I read (some of) this stuff so you do not have to.
+
+### Shortcuts:
+* `h` for help
+* `number` + `Enter` go to page
+* `b` for "black-out"
+* `m` for "mirror"
+* `f` to toggle full-screen 
+* `c` for clone slides to a new browser window; slides in the two windows will be in sync as you navigate through them
+* `p` for presenters mode 
+
+
+
+
+---
+class: middle, center
+
+# Thank you
+
+
+
+---
+class: middle
+
+
+```r
+library(tidyverse)
+```
+
+```
+  -- Attaching packages ------------------------------------------------------------------------ tidyverse 1.2.1 --
+```
+
+```
+  v ggplot2 3.1.0     v purrr   0.2.5
+  v tibble  1.4.2     v dplyr   0.7.6
+  v tidyr   0.8.1     v stringr 1.3.1
+  v readr   1.1.1     v forcats 0.3.0
+```
+
+```
+  -- Conflicts --------------------------------------------------------------------------- tidyverse_conflicts() --
+  x dplyr::filter() masks stats::filter()
+  x dplyr::lag()    masks stats::lag()
+```
+
+```r
+tidyverse_logo()
+```
+
+```
+  * __  _    __   .    o           *  . 
+   / /_(_)__/ /_ ___  _____ _______ ___ 
+  / __/ / _  / // / |/ / -_) __(_-&lt;/ -_)
+  \__/_/\_,_/\_, /|___/\__/_/ /___/\__/ 
+       *  . /___/      o      .       *
+```
+
+
+???
+
+Tidyverse is simply a collection of 8 core package with which share common design principles.
+Or, more bluntly out: 'all the nice stuff from Hadley Wickham and co. at Rstudio'.
+
+Each package probably warrents it's one presentation.
+
+
+
+---
+class: center
+
+#### The `tidyverse` dependencies
+
+<div id="htmlwidget-874614f49fdbfec82ded" style="width:750px;height:450px;" class="forceNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-874614f49fdbfec82ded">{"x":{"links":{"source":[0,0,0,0,0,0,0,0,0,1,1,2,2,2,2,2,2,2,2,2,3,3,3,4,4,4,4,5,5,6,6,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8],"target":[9,10,11,12,13,14,15,16,6,6,12,17,18,19,20,21,22,23,6,24,12,6,14,16,6,25,15,26,12,14,16,0,11,12,3,14,16,26,6,27,28,0,1,2,29,30,25,31,32,12,33,3,4,34,5,6,35,7,36],"value":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"colour":["#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF"]},"nodes":{"name":["dplyr","forcats","ggplot2","purrr","readr","stringr","tibble","tidyr","tidyverse","assertthat","bindrcpp","glue","magrittr","pkgconfig","rlang","R6","Rcpp","digest","grid","gtable","MASS","plyr","reshape2","scales","lazyeval","hms","stringi","tidyselect","broom","haven","httr","jsonlite","lubridate","modelr","readxl","rvest","xml2"],"group":[4,4,4,4,4,4,4,4,6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],"nodesize":[4,4,4,4,4,4,4,4,6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]},"options":{"NodeID":"nName","Group":"group","colourScale":"d3.scaleOrdinal(d3.schemeCategory20);","fontSize":14,"fontFamily":"serif","clickTextSize":35,"linkDistance":65,"linkWidth":"function(d) { return Math.sqrt(d.value); }","charge":-200,"opacity":1,"zoom":true,"legend":false,"arrows":true,"nodesize":true,"radiusCalculation":"7","bounded":true,"opacityNoHover":1,"clickAction":" d3.select(this).select(\"circle\")\n  .transition().duration(750).attr(\"r\", 20)"}},"evals":[],"jsHooks":[]}</script>
+
+.left[
+Press `ctrl`+`R` or `F5`
+]
+
+
+---
+# A common design philsophy
+
+
+* A shared concept of *tidy data*; the *tidy*verse, not the *messy*verse
+     * Programs are for humans to read
+     * Embrace functional programming
+     * Use and reuse existing data structures
+     * Compose simple functions with the pipe
+
+* "There should be one, and preferably only one, obvious way to do it."
+
+    * The **R** core team's philosophy is fundamentatlly different.
+
+.footnote[
+https://principles.tidyverse.org/ &lt;br&gt;
+https://github.com/tidyverse/principles/issues &lt;br&gt;
+https://tidyverse.tidyverse.org/articles/manifesto.html
+]
+
+???
+
+* The traditional way of manipulating data in R is quite different from this
+* That obvious way may not be obvious at first.
+* R core team says: many ways to do the same thing.
+* The grammar of graphics
+
+---
+# What is *tidy data*?
+
+&gt; Happy families are all alike; every unhappy family is unhappy in its own way.
+&gt; .right[*Leo Tolstoy*]
+
+Data is *tidy* **if**:
+1. Each variable forms a column.
+2. Each observation forms a row.
+3. Each type of observational unit forms a table. (A value must have it own cell)
+
+
+.footnote[
+Wickham, H. (2014). Tidy Data. Journal of Statistical Software, 59(10), 1-23. doi:http://dx.doi.org/10.18637/jss.v059.i10
+]
+
+???
+
+* Speaks only toward 'rectcangular data' --- there is lots of data that is not naturally rectangular.
+* Some 80% of data analysis is used on cleaning and preparing data (Dasu and Johnson 2003)
+* You feel that the 1--2 is tautological, but if you think long-vs-wide tables it should be apparent it is not.
+* It is sometimes surprisingly difficult to precisely define variables and observations.
+    * Rule of thumb: it's easier to describe functional relationships between variables than between rows, 
+    * it is easier to make comparisons between groups of observations than between groups of columns. 
+
+
+---
+# What is **not** tidy data?
+
+&gt;* Column headers are values, not variable names.
+&gt;* Multiple variables are stored in one column.
+&gt;* Variables are stored in both rows and columns.
+&gt;* Multiple types of observational units are stored in the same table.
+&gt;* A single observational unit is stored in multiple tables.
+
+* Contingency tables / *n*-factor tabulation arrays
+
+.footnote[
+Wickham, H. (2014) http://dx.doi.org/10.18637/jss.v059.i10
+]
+
+???
+
+
+
+
+---
+class: middle
+
+### Tidy?
+
+```r
+print(AirPassengers) # Monthly Airline Passenger Numbers 1949-1960
+```
+
+```
+     Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+1949 112 118 132 129 121 135 148 148 136 119 104 118
+1950 115 126 141 135 125 149 170 170 158 133 114 140
+1951 145 150 178 163 172 178 199 199 184 162 146 166
+1952 171 180 193 181 183 218 230 242 209 191 172 194
+1953 196 196 236 235 229 243 264 272 237 211 180 201
+1954 204 188 235 227 234 264 302 293 259 229 203 229
+1955 242 233 267 269 270 315 364 347 312 274 237 278
+1956 284 277 317 313 318 374 413 405 355 306 271 306
+1957 315 301 356 348 355 422 465 467 404 347 305 336
+1958 340 318 362 348 363 435 491 505 404 359 310 337
+1959 360 342 406 396 420 472 548 559 463 407 362 405
+1960 417 391 419 461 472 535 622 606 508 461 390 432
+```
+                
+
+
+
+
+---
+
+## `%&gt;%`
+
+The following are equivalent
+
+- `value %&gt;% f(...)`
+- `f(value, ...)`
+
+
+      Univariate f:    x %&gt;% f          is the same as  f(x)
+      Multivariate g:  x %&gt;% g(y, ...)  is the same as  g(x, y, ...)
+
+
+```r
+iris %&gt;% 
+  subset(Species == "setosa", select = names(.)[-4]) %&gt;%
+  head(n=2)
+```
+
+```
+  Sepal.Length Sepal.Width Petal.Length Species
+1          5.1         3.5          1.4  setosa
+2          4.9         3.0          1.4  setosa
+```
+
+```r
+head(subset(iris, Species=="setosa", select = names(iris)[-4]), n=2)
+```
+
+
+???
+
+Called the pipe operator; performs function composition.
+From the pacakge `magrittr`; adopted by `tidyverse`.
+Can give some expressive code by daisy chaining pipes.
+The dot `.` can be used as placeholder to place the left hand size elsewhere or use
+the `value` for other purposes.
+
+
+
+
+
+
+
+
+
+
+---
+
+
+class: center, middle, inverse
+
+# [`tibble`](https://tibble.tidyverse.org/)
+
+.footnote[
+https://tibble.tidyverse.org/
+]
+
+
+
+---
+### tibbles
+
+
+```r
+tbl &lt;- tibble(x = 1:50, y = exp(x), w = y &gt; 1, char = "AaRUG")
+tbl
+```
+
+```
+# A tibble: 50 x 4
+       x        y w     char 
+   &lt;int&gt;    &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;
+ 1     1     2.72 TRUE  AaRUG
+ 2     2     7.39 TRUE  AaRUG
+ 3     3    20.1  TRUE  AaRUG
+ 4     4    54.6  TRUE  AaRUG
+ 5     5   148.   TRUE  AaRUG
+ 6     6   403.   TRUE  AaRUG
+ 7     7  1097.   TRUE  AaRUG
+ 8     8  2981.   TRUE  AaRUG
+ 9     9  8103.   TRUE  AaRUG
+10    10 22026.   TRUE  AaRUG
+# ... with 40 more rows
+```
+
+```r
+class(tbl)
+```
+
+```
+[1] "tbl_df"     "tbl"        "data.frame"
+```
+
+???
+
+Much like the data.frame but with all the annoying stuff taken away.
+Creating tibbles are covered in syntactic sugar.
+It extends the data.frame; but actually "dumber."
+All tibbles are data.frames; but not all data.frames are tibbles.
+
+They feature:
+* Better printing
+* Only recycles length 1 inputs.
+* Evaluates its arguments lazily and in order.
+* Never coerces inputs (i.e. strings stay as strings!).
+* Never adds row.names.
+* Never munges column names.
+* Adds tbl_df class to output.
+* Automatically adds column names.
+
+
+
+---
+### tibbles (cont.)
+
+Subsetting via "[" does not "drop". Subsetting with "$" does.
+
+```r
+tbl[25, ]
+```
+
+```
+# A tibble: 1 x 4
+      x            y w     char 
+  &lt;int&gt;        &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;
+1    25 72004899337. TRUE  AaRUG
+```
+
+```r
+print(tbl[, "y"], n = 3)
+```
+
+```
+# A tibble: 50 x 1
+      y
+  &lt;dbl&gt;
+1  2.72
+2  7.39
+3 20.1 
+# ... with 47 more rows
+```
+
+```r
+str(tbl$y)
+```
+
+```
+ num [1:50] 2.72 7.39 20.09 54.6 148.41 ...
+```
+
+
+---
+### tibbles (cont.)
+
+Also no partial matching!
+
+
+```r
+tbl$ch
+```
+
+```
+Warning: Unknown or uninitialised column: 'ch'.
+```
+
+```
+NULL
+```
+
+```r
+data.frame(a = 1, char = "test")$ch
+```
+
+```
+[1] test
+Levels: test
+```
+
+
+
+### tibbles do less and compain more
+
+???
+
+Hopefully this should lead to more expressive code and confront problems
+
+
+
+
+---
+
+
+class: center, middle, inverse
+
+# [`readr`](https://readr.tidyverse.org/)
+
+.footnote[
+https://readr.tidyverse.org/
+]
+
+
+---
+class: middle
+
+
+```r
+mtcars &lt;- read_csv(readr_example("mtcars.csv"))
+```
+
+```
+Parsed with column specification:
+cols(
+  mpg = col_double(),
+  cyl = col_integer(),
+  disp = col_double(),
+  hp = col_integer(),
+  drat = col_double(),
+  wt = col_double(),
+  qsec = col_double(),
+  vs = col_integer(),
+  am = col_integer(),
+  gear = col_integer(),
+  carb = col_integer()
+)
+```
+
+```r
+mtcars$car &lt;- rownames(datasets::mtcars)
+```
+
+#### Features:
+* Returns tibbles
+* Allegedly 10x faster than base **R**  
+* Strings are parsed as-is (not more `stringsAsFactors = FALSE`)
+* Parses common data-time formats
+* Progress indicator for large files
+* Do not depend on locale (US default)
+
+???
+
+* `file` Either a path to a file, a connection, or literal data
+* Argument `col_types` accepts the copy-paste of the output.
+
+---
+class: middle
+
+#### `readr` supports:
+
+
+```r
+read_csv()    # comma separated (CSV) files
+read_tsv()    # tab separated files
+read_delim()  # general delimited files
+read_fwf()    # fixed width files
+read_table()  # tabular files with white-space separated columns
+read_log()    # web log files
+```
+
+
+
+
+
+
+---
+
+
+class: center, middle, inverse
+
+# [`dplyr`](https://dplyr.tidyverse.org/)
+
+.footnote[
+https://dplyr.tidyverse.org/
+]
+
+???
+
+* dplyr is a grammar of data maninulation *on tidy data*
+* (Relatively) consistent
+* Provide few 'verbs' to do most things --- one-way philosophy
+* Fast, not not built for speed. `data.table` might be better here.
+
+From the docs:pp
+
+&gt; * Identify the most important data manipulation verbs and make them easy to use from R.
+&gt; * Provide blazing fast performance for in-memory data by writing key pieces in C++ (using Rcpp)
+&gt; * Use the same interface to work with data no matter where it's stored, whether in a data frame, a data table or database.
+
+---
+### dplyr overview
+
+Core functionalty:
+
+* `select()` columns
+* `filter()` rows
+* `arrange()` / sort rows
+* `mutate()` and `transmute()`: add new columns
+
+Reduce/summarize (groups of) rows with:
+
+* `summarise()`, `summarize()`
+
+and 
+
+* `group_by()`, `ungroup()`
+
+
+
+---
+### `mtcars`
+
+
+
+```r
+mtcars %&gt;% print(n = 5, width = 60)
+```
+
+```
+# A tibble: 32 x 12
+    mpg   cyl  disp    hp  drat    wt  qsec    vs    am
+  &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;
+1  21       6   160   110  3.9   2.62  16.5     0     1
+2  21       6   160   110  3.9   2.88  17.0     0     1
+3  22.8     4   108    93  3.85  2.32  18.6     1     1
+4  21.4     6   258   110  3.08  3.22  19.4     1     0
+5  18.7     8   360   175  3.15  3.44  17.0     0     0
+# ... with 27 more rows, and 3 more variables: gear &lt;int&gt;,
+#   carb &lt;int&gt;, car &lt;chr&gt;
+```
+
+---
+### Basic dplyr in action
+
+```r
+mtcars %&gt;% 
+* filter(cyl %&gt;% between(4,6))
+```
+
+```
+# A tibble: 18 x 12
+     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb car       
+   &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;     
+ 1  21       6 160     110  3.9   2.62  16.5     0     1     4     4 Mazda RX4 
+ 2  21       6 160     110  3.9   2.88  17.0     0     1     4     4 Mazda RX4~
+ 3  22.8     4 108      93  3.85  2.32  18.6     1     1     4     1 Datsun 710
+ 4  21.4     6 258     110  3.08  3.22  19.4     1     0     3     1 Hornet 4 ~
+ 5  18.1     6 225     105  2.76  3.46  20.2     1     0     3     1 Valiant   
+ 6  24.4     4 147.     62  3.69  3.19  20       1     0     4     2 Merc 240D 
+ 7  22.8     4 141.     95  3.92  3.15  22.9     1     0     4     2 Merc 230  
+ 8  19.2     6 168.    123  3.92  3.44  18.3     1     0     4     4 Merc 280  
+ 9  17.8     6 168.    123  3.92  3.44  18.9     1     0     4     4 Merc 280C 
+10  32.4     4  78.7    66  4.08  2.2   19.5     1     1     4     1 Fiat 128  
+11  30.4     4  75.7    52  4.93  1.62  18.5     1     1     4     2 Honda Civ~
+12  33.9     4  71.1    65  4.22  1.84  19.9     1     1     4     1 Toyota Co~
+13  21.5     4 120.     97  3.7   2.46  20.0     1     0     3     1 Toyota Co~
+14  27.3     4  79      66  4.08  1.94  18.9     1     1     4     1 Fiat X1-9 
+15  26       4 120.     91  4.43  2.14  16.7     0     1     5     2 Porsche 9~
+16  30.4     4  95.1   113  3.77  1.51  16.9     1     1     5     2 Lotus Eur~
+17  19.7     6 145     175  3.62  2.77  15.5     0     1     5     6 Ferrari D~
+18  21.4     4 121     109  4.11  2.78  18.6     1     1     4     2 Volvo 142E
+```
+
+???
+
+* `filter` has helper functions `between`, `near`, ``xor`
+
+---
+### Basic dplyr in action
+
+```r
+mtcars %&gt;% 
+  filter(cyl %&gt;% between(4,6)) %&gt;% 
+* select(car, mpg:wt, -drat) # also supports -(colX:colY)
+```
+
+```
+# A tibble: 18 x 6
+   car              mpg   cyl  disp    hp    wt
+   &lt;chr&gt;          &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;
+ 1 Mazda RX4       21       6 160     110  2.62
+ 2 Mazda RX4 Wag   21       6 160     110  2.88
+ 3 Datsun 710      22.8     4 108      93  2.32
+ 4 Hornet 4 Drive  21.4     6 258     110  3.22
+ 5 Valiant         18.1     6 225     105  3.46
+ 6 Merc 240D       24.4     4 147.     62  3.19
+ 7 Merc 230        22.8     4 141.     95  3.15
+ 8 Merc 280        19.2     6 168.    123  3.44
+ 9 Merc 280C       17.8     6 168.    123  3.44
+10 Fiat 128        32.4     4  78.7    66  2.2 
+11 Honda Civic     30.4     4  75.7    52  1.62
+12 Toyota Corolla  33.9     4  71.1    65  1.84
+13 Toyota Corona   21.5     4 120.     97  2.46
+14 Fiat X1-9       27.3     4  79      66  1.94
+15 Porsche 914-2   26       4 120.     91  2.14
+16 Lotus Europa    30.4     4  95.1   113  1.51
+17 Ferrari Dino    19.7     6 145     175  2.77
+18 Volvo 142E      21.4     4 121     109  2.78
+```
+
+???
+
+* `select` has helper functions `starts_with`, `ends_with`, `contains`, `matches`
+
+
+---
+### Basic dplyr in action
+
+```r
+mtcars %&gt;% 
+  filter(cyl %&gt;% between(4,6)) %&gt;% 
+  select(car, mpg:wt, -drat) %&gt;%
+* mutate(wt = 0.45*wt, `hp/wt` = hp/wt)
+```
+
+```
+# A tibble: 18 x 7
+   car              mpg   cyl  disp    hp    wt `hp/wt`
+   &lt;chr&gt;          &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Mazda RX4       21       6 160     110 1.18     93.3
+ 2 Mazda RX4 Wag   21       6 160     110 1.29     85.0
+ 3 Datsun 710      22.8     4 108      93 1.04     89.1
+ 4 Hornet 4 Drive  21.4     6 258     110 1.45     76.0
+ 5 Valiant         18.1     6 225     105 1.56     67.4
+ 6 Merc 240D       24.4     4 147.     62 1.44     43.2
+ 7 Merc 230        22.8     4 141.     95 1.42     67.0
+ 8 Merc 280        19.2     6 168.    123 1.55     79.5
+ 9 Merc 280C       17.8     6 168.    123 1.55     79.5
+10 Fiat 128        32.4     4  78.7    66 0.99     66.7
+11 Honda Civic     30.4     4  75.7    52 0.727    71.6
+12 Toyota Corolla  33.9     4  71.1    65 0.826    78.7
+13 Toyota Corona   21.5     4 120.     97 1.11     87.4
+14 Fiat X1-9       27.3     4  79      66 0.871    75.8
+15 Porsche 914-2   26       4 120.     91 0.963    94.5
+16 Lotus Europa    30.4     4  95.1   113 0.681   166. 
+17 Ferrari Dino    19.7     6 145     175 1.25    140. 
+18 Volvo 142E      21.4     4 121     109 1.25     87.1
+```
+
+???
+
+* `mutate` supports multiple new columns, created in order
+    - mtcars %&gt;% mutate(cyl_disp_ccm = 16.387064*disp/cyl, cyl_disp_L = cyl_disp_ccm/1000)
+* `mutate` has helper functions `cumall`, `cumany`, `recode`, `case_when`, `percent_rank`
+* `transmute` would just return the derived value
+
+---
+### Basic dplyr in action
+
+```r
+mtcars %&gt;% 
+  filter(cyl %&gt;% between(4,6)) %&gt;%
+  select(car, mpg:wt, -drat) %&gt;%
+  mutate(wt = 0.45*wt, `hp/wt` = hp/wt) %&gt;%
+* arrange(desc(`hp/wt`))
+```
+
+```
+# A tibble: 18 x 7
+   car              mpg   cyl  disp    hp    wt `hp/wt`
+   &lt;chr&gt;          &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Lotus Europa    30.4     4  95.1   113 0.681   166. 
+ 2 Ferrari Dino    19.7     6 145     175 1.25    140. 
+ 3 Porsche 914-2   26       4 120.     91 0.963    94.5
+ 4 Mazda RX4       21       6 160     110 1.18     93.3
+ 5 Datsun 710      22.8     4 108      93 1.04     89.1
+ 6 Toyota Corona   21.5     4 120.     97 1.11     87.4
+ 7 Volvo 142E      21.4     4 121     109 1.25     87.1
+ 8 Mazda RX4 Wag   21       6 160     110 1.29     85.0
+ 9 Merc 280        19.2     6 168.    123 1.55     79.5
+10 Merc 280C       17.8     6 168.    123 1.55     79.5
+11 Toyota Corolla  33.9     4  71.1    65 0.826    78.7
+12 Hornet 4 Drive  21.4     6 258     110 1.45     76.0
+13 Fiat X1-9       27.3     4  79      66 0.871    75.8
+14 Honda Civic     30.4     4  75.7    52 0.727    71.6
+15 Valiant         18.1     6 225     105 1.56     67.4
+16 Merc 230        22.8     4 141.     95 1.42     67.0
+17 Fiat 128        32.4     4  78.7    66 0.99     66.7
+18 Merc 240D       24.4     4 147.     62 1.44     43.2
+```
+
+---
+### Basic dplyr in action
+
+```r
+mtcars %&gt;% 
+  filter(cyl %&gt;% between(4,6)) %&gt;% 
+  select(car, mpg:wt, -drat) %&gt;%
+  mutate(wt = 0.45*wt, `hp/wt` = hp/wt) %&gt;% 
+  arrange(desc(`hp/wt`)) %&gt;% 
+* group_by(cyl)
+```
+
+```
+# A tibble: 18 x 7
+# Groups:   cyl [2]
+   car              mpg   cyl  disp    hp    wt `hp/wt`
+   &lt;chr&gt;          &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Lotus Europa    30.4     4  95.1   113 0.681   166. 
+ 2 Ferrari Dino    19.7     6 145     175 1.25    140. 
+ 3 Porsche 914-2   26       4 120.     91 0.963    94.5
+ 4 Mazda RX4       21       6 160     110 1.18     93.3
+ 5 Datsun 710      22.8     4 108      93 1.04     89.1
+ 6 Toyota Corona   21.5     4 120.     97 1.11     87.4
+ 7 Volvo 142E      21.4     4 121     109 1.25     87.1
+ 8 Mazda RX4 Wag   21       6 160     110 1.29     85.0
+ 9 Merc 280        19.2     6 168.    123 1.55     79.5
+10 Merc 280C       17.8     6 168.    123 1.55     79.5
+11 Toyota Corolla  33.9     4  71.1    65 0.826    78.7
+12 Hornet 4 Drive  21.4     6 258     110 1.45     76.0
+13 Fiat X1-9       27.3     4  79      66 0.871    75.8
+14 Honda Civic     30.4     4  75.7    52 0.727    71.6
+15 Valiant         18.1     6 225     105 1.56     67.4
+16 Merc 230        22.8     4 141.     95 1.42     67.0
+17 Fiat 128        32.4     4  78.7    66 0.99     66.7
+18 Merc 240D       24.4     4 147.     62 1.44     43.2
+```
+
+---
+### Basic dplyr in action
+
+```r
+mtcars %&gt;% 
+  filter(cyl %&gt;% between(4,6)) %&gt;% 
+  select(car, mpg:wt, -drat) %&gt;%
+  mutate(wt = 0.45*wt, `hp/wt` = hp/wt) %&gt;%
+  arrange(desc(`hp/wt`)) %&gt;% 
+  group_by(cyl) %&gt;%  
+* summarize(mean_hpwt = mean(`hp/wt`), tanh = tanh(mean_hpwt))
+```
+
+```
+# A tibble: 2 x 3
+    cyl mean_hpwt  tanh
+  &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1     4      84.3     1
+2     6      88.7     1
+```
+
+???
+
+* Doing the above it "[" would be a nightmare in comparison
+* Again lazy evaluation, in order is generally supported.
+* 'Context-refence' (NSE as Janus talked about last time)
+
+---
+class: center, middle
+
+# [`dbplyr`](https://dbplyr.tidyverse.org/)
+
+.footnote[
+https://dbplyr.tidyverse.org/
+]
+
+???
+
+* `dbplyr` is a database backend for `dplyr`
+* Unlike "[", it abstracts away how the data is stored
+* Converts `dplyr` code to SQL calls
+* Expressions are lazily evaluated and `dplyr` pipes generate SQL, which is sent to the DB only when requested.
+
+---
+
+
+class: center, middle, inverse
+
+# [`tidyr`](https://tidyr.tidyverse.org/)
+
+.footnote[
+https://tidyr.tidyverse.org/
+]
+
+
+---
+class: center, middle
+
+&gt; The goal of `tidyr` is to help you create **tidy data**.
+
+.footnote[
+https://tidyr.tidyverse.org/
+]
+
+
+
+---
+### Key tidyr functions
+
+* `gather()`: *gathers* ultiple columns into two key-value columns
+  - i.e. wide to long format
+
+* `spread()`: *spreads* two columns (key &amp; value) into multiple columns
+  - i.e. long to wide format
+
+* `separate()`: pulls apart one `character` column into many (inverse of `unite()`)
+  - `separate_rows` separate into extra rows
+  
+* `extract()`: similar, but uses regex to capture groups
+
+
+???
+
+* Alternative to `reshape` and `reshape2` packages.
+
+
+
+---
+### Other tidying
+#### Handle missing values
+* `drop_na()`  filters `NA`
+* `fill()`  fills `NA` with most recent non-`NA` (from top og bottom)
+* `replace_na()`
+* `complete()`: Expand current tibble to make missing values explicit
+* `expand()`: Creates a new tibble (like `expand.grid`)
+
+
+---
+### tidyr in action
+
+```r
+*WHO_tuberculosis
+```
+
+```
+# A tibble: 5 x 4
+  country     century year  rate             
+  &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;            
+1 Afghanistan 19      99    745/19987071     
+2 Afghanistan 20      00    2666/20595360    
+3 Brazil      19      99    37737/172006362  
+4 Brazil      20      00    80488/174504898  
+5 China       19      99    212258/1272915272
+```
+
+.footnote[
+http://www.who.int/tb/country/data/download/en/
+`tidyr::table5`
+]
+
+---
+### tidyr in action
+
+```r
+WHO_tuberculosis %&gt;% 
+* unite(col = "year", century, year, sep = "")
+```
+
+```
+# A tibble: 5 x 3
+  country     year  rate             
+  &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;            
+1 Afghanistan 1999  745/19987071     
+2 Afghanistan 2000  2666/20595360    
+3 Brazil      1999  37737/172006362  
+4 Brazil      2000  80488/174504898  
+5 China       1999  212258/1272915272
+```
+
+---
+### tidyr in action
+
+```r
+WHO_tuberculosis %&gt;% 
+  unite(col = "year", century, year, sep = "") %&gt;% 
+* separate(rate, into = c("cases", "pop"))
+```
+
+```
+# A tibble: 5 x 4
+  country     year  cases  pop       
+  &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     
+1 Afghanistan 1999  745    19987071  
+2 Afghanistan 2000  2666   20595360  
+3 Brazil      1999  37737  172006362 
+4 Brazil      2000  80488  174504898 
+5 China       1999  212258 1272915272
+```
+
+---
+### tidyr in action
+
+```r
+WHO_tuberculosis %&gt;% 
+  unite(col = "year", century, year, sep = "") %&gt;% 
+  separate(rate, into = c("cases", "pop")) %&gt;% 
+* gather(cases, pop, key = type, value = count)
+```
+
+```
+# A tibble: 10 x 4
+   country     year  type  count     
+   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     
+ 1 Afghanistan 1999  cases 745       
+ 2 Afghanistan 2000  cases 2666      
+ 3 Brazil      1999  cases 37737     
+ 4 Brazil      2000  cases 80488     
+ 5 China       1999  cases 212258    
+ 6 Afghanistan 1999  pop   19987071  
+ 7 Afghanistan 2000  pop   20595360  
+ 8 Brazil      1999  pop   172006362 
+ 9 Brazil      2000  pop   174504898 
+10 China       1999  pop   1272915272
+```
+
+---
+### tidyr in action
+
+```r
+WHO_tuberculosis %&gt;% 
+  unite(col = "year", century, year, sep = "") %&gt;% 
+  separate(rate, into = c("cases", "pop")) %&gt;% 
+  gather(cases, pop, key = type, value = count) %&gt;% 
+* complete(country, year, type)
+```
+
+```
+# A tibble: 12 x 4
+   country     year  type  count     
+   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     
+ 1 Afghanistan 1999  cases 745       
+ 2 Afghanistan 1999  pop   19987071  
+ 3 Afghanistan 2000  cases 2666      
+ 4 Afghanistan 2000  pop   20595360  
+ 5 Brazil      1999  cases 37737     
+ 6 Brazil      1999  pop   172006362 
+ 7 Brazil      2000  cases 80488     
+ 8 Brazil      2000  pop   174504898 
+ 9 China       1999  cases 212258    
+10 China       1999  pop   1272915272
+11 China       2000  cases &lt;NA&gt;      
+12 China       2000  pop   &lt;NA&gt;      
+```
+
+---
+### tidyr in action
+
+```r
+WHO_tuberculosis %&gt;% 
+  unite(col = "year", century, year, sep = "") %&gt;% 
+  separate(rate, into = c("cases", "pop")) %&gt;% 
+  gather(cases, pop, key = type, value = count) %&gt;% 
+  complete(country, year, type) %&gt;% 
+* replace_na()
+```
+
+```
+# A tibble: 12 x 4
+   country     year  type  count     
+   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     
+ 1 Afghanistan 1999  cases 745       
+ 2 Afghanistan 1999  pop   19987071  
+ 3 Afghanistan 2000  cases 2666      
+ 4 Afghanistan 2000  pop   20595360  
+ 5 Brazil      1999  cases 37737     
+ 6 Brazil      1999  pop   172006362 
+ 7 Brazil      2000  cases 80488     
+ 8 Brazil      2000  pop   174504898 
+ 9 China       1999  cases 212258    
+10 China       1999  pop   1272915272
+11 China       2000  cases &lt;NA&gt;      
+12 China       2000  pop   &lt;NA&gt;      
+```
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+
+class: center, middle, inverse
+
+# [`purrr`](https://purrr.tidyverse.org/)
+
+.footnote[
+https://purrr.tidyverse.org/
+]
+
+
+---
+class: middle
+### Functional programming
+
+* Abstracts away for-loops
+* Consistent interface for working with vectors (incl. lists) and functions
+* Alternative to the `apply` family 
+
+???
+
+* Code should be easier to read and reason about
+* Downside, I think it gets quite complex quit easily (but I'm not used to reason that way)
+
+
+
+---
+### Motivation
+
+```r
+tbl &lt;- tibble(a = rnorm(10, mean = 100), b = rnorm(10, mean = 100),
+              c = rnorm(10, mean = 100), d = rnorm(10, mean = 100))
+print(tbl)
+```
+
+```
+# A tibble: 10 x 4
+       a     b     c     d
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  99.4 102.  101.  101. 
+ 2 100.  100.  101.   99.9
+ 3  99.2  99.4 100.  100. 
+ 4 102.   97.8  98.0  99.9
+ 5 100.  101.  101.   98.6
+ 6  99.2 100.0  99.9  99.6
+ 7 100.  100.0  99.8  99.6
+ 8 101.  101.   98.5  99.9
+ 9 101.  101.   99.5 101. 
+10  99.7 101.  100.  101. 
+```
+Say we want to compute the standard deviation for each column.
+
+
+---
+### Motivation (cont)
+
+```r
+sd(tbl$a)
+```
+
+```
+[1] 0.780586
+```
+
+```r
+sd(tbl$b)
+```
+
+```
+[1] 1.069515
+```
+
+```r
+sd(tbl$c)
+```
+
+```
+[1] 0.9556076
+```
+
+```r
+sd(tbl$d)
+```
+
+```
+[1] 0.8085646
+```
+
+---
+### Motivation (cont)
+
+```r
+out &lt;- vector("numeric", ncol(tbl))
+for (i in seq_along(out)) {
+* out[i] &lt;- sd(tbl[[i]])
+}
+out
+```
+
+```
+[1] 0.7805860 1.0695148 0.9556076 0.8085646
+```
+
+
+---
+### Motivation (cont)
+
+```r
+out2 &lt;- sapply(tbl, sd)
+out2
+```
+
+```
+        a         b         c         d 
+0.7805860 1.0695148 0.9556076 0.8085646 
+```
+
+---
+### Motivation (cont)
+
+```r
+out3 &lt;- purrr::map(tbl, sd)  # basically identical with lapply
+out3
+```
+
+```
+$a
+[1] 0.780586
+
+$b
+[1] 1.069515
+
+$c
+[1] 0.9556076
+
+$d
+[1] 0.8085646
+```
+
+---
+### Motivation (cont)
+
+```r
+out4 &lt;- purrr::map_dbl(tbl, sd)
+out4
+```
+
+```
+        a         b         c         d 
+0.7805860 1.0695148 0.9556076 0.8085646 
+```
+
+---
+### Motivation (cont)
+
+```r
+out5 &lt;- purrr::map_chr(tbl, sd)
+out5
+```
+
+```
+         a          b          c          d 
+"0.780586" "1.069515" "0.955608" "0.808565" 
+```
+
+
+---
+### Remember tibbles (and data.frames) are lists
+
+```r
+mtcars %&gt;%
+  split(.$cyl) %&gt;% # from base R
+  map(~ lm(mpg ~ wt, data = .)) %&gt;%
+  map(summary) %&gt;%
+  map_dbl("r.squared")
+```
+
+```
+        4         6         8 
+0.5086326 0.4645102 0.4229655 
+```
+
+
+
+???
+
+&lt;!-- from https://purrr.tidyverse.org/ --&gt;
+* The first argument is always the data, so `purrr` works naturally with the pipe.
+All purrr functions are type-stable. 
+* They always return the advertised output type (map() returns lists; map_dbl() returns double vectors), or they throw an error.
+* All map() functions either accept function, formulas (used for succinctly generating anonymous functions), a character vector (used to extract components by name), or a numeric vector (used to extract by position).
+
+
+
+---
+class: middle
+
+### Multivariate map
+
+```r
+mu &lt;- list(5, 10, -3)
+sigma &lt;- list(1, 3, 6)
+map2(mu, sigma, rnorm, n = 4)
+```
+
+```
+[[1]]
+[1] 4.835476 4.746638 5.696963 5.556663
+
+[[2]]
+[1]  7.933733  7.877515 11.093746 12.305599
+
+[[3]]
+[1] -3.6740773  2.2866464 -0.6113647 -6.6721584
+```
+
+* `pmap` generalizes `map2` this to p-arguments (to avoid `map3`, `map4`, ...)
+
+
+
+---
+#### Invoking different functions
+
+
+```r
+f &lt;- c("runif", "rnorm", "rpois")
+param &lt;- list(
+  list(min = -1, max = 1), 
+  list(sd = 5), 
+  list(lambda = 10)
+)
+invoke_map(f, param, n = 5) 
+```
+
+```
+[[1]]
+[1]  0.26698653 -0.57358373 -0.74125530 -0.04376393  0.84814894
+
+[[2]]
+[1]   1.2507066   3.0912165  -0.8631175 -11.1195014  -6.3180719
+
+[[3]]
+[1] 11  9  7 10  7
+```
+
+---
+#### Works well with `tibbles`
+
+```r
+sim &lt;- tribble(
+  ~f,      ~params,
+  "runif", list(min = -1, max = 1),
+  "rnorm", list(sd = 5),
+  "rpois", list(lambda = 10)
+)
+print(sim)
+```
+
+```
+# A tibble: 3 x 2
+  f     params    
+  &lt;chr&gt; &lt;list&gt;    
+1 runif &lt;list [2]&gt;
+2 rnorm &lt;list [1]&gt;
+3 rpois &lt;list [1]&gt;
+```
+
+```r
+sim %&gt;% 
+  mutate(sim = invoke_map(f, params, n = 10))
+```
+
+```
+# A tibble: 3 x 3
+  f     params     sim       
+  &lt;chr&gt; &lt;list&gt;     &lt;list&gt;    
+1 runif &lt;list [2]&gt; &lt;dbl [10]&gt;
+2 rnorm &lt;list [1]&gt; &lt;dbl [10]&gt;
+3 rpois &lt;list [1]&gt; &lt;int [10]&gt;
+```
+
+
+
+---
+### `reduce` &amp; `accumulate`
+
+```r
+vs &lt;- list(
+  c(1, 3, 5, 6, 10),
+  c(1, 2, 3, 7, 8, 10),
+  c(1, 2, 3, 4, 8, 9, 10)
+)
+vs %&gt;% reduce(intersect)
+```
+
+```
+[1]  1  3 10
+```
+
+```r
+x &lt;- c(1,5,2,3)
+x %&gt;% accumulate(`-`)  # cummulative difference
+```
+
+```
+[1]  1 -4 -6 -9
+```
+
+
+
+
+
+
+
+---
+
+
+class: center, middle, inverse
+
+# [`stringr`](https://stringr.tidyverse.org/)
+
+.footnote[
+https://stringr.tidyverse.org/
+]
+
+
+---
+class: middle
+
+### Consistent string manipulation functions
+* `str_` prefixed functions
+
+
+```r
+ls("package:stringr")
+```
+
+```
+ [1] "%&gt;%"             "boundary"        "coll"            "fixed"          
+ [5] "fruit"           "invert_match"    "regex"           "sentences"      
+ [9] "str_c"           "str_conv"        "str_count"       "str_detect"     
+[13] "str_dup"         "str_extract"     "str_extract_all" "str_flatten"    
+[17] "str_glue"        "str_glue_data"   "str_interp"      "str_length"     
+[21] "str_locate"      "str_locate_all"  "str_match"       "str_match_all"  
+[25] "str_order"       "str_pad"         "str_remove"      "str_remove_all" 
+[29] "str_replace"     "str_replace_all" "str_replace_na"  "str_sort"       
+[33] "str_split"       "str_split_fixed" "str_squish"      "str_sub"        
+[37] "str_sub&lt;-"       "str_subset"      "str_to_lower"    "str_to_title"   
+[41] "str_to_upper"    "str_trim"        "str_trunc"       "str_view"       
+[45] "str_view_all"    "str_which"       "str_wrap"        "word"           
+[49] "words"          
+```
+
+???
+  
+* Consistent interface to string manipulation
+* Of course 
+
+---
+  class: middle
+
+
+```r
+ls("package:stringr") %&gt;% head(n = 18) %&gt;% 
+str_view_all("str_|ex")
+```
+
+<div id="htmlwidget-08eba7e0b7bc19d31d0a" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-08eba7e0b7bc19d31d0a">{"x":{"html":"<ul>\n  <li>%>%<\/li>\n  <li>boundary<\/li>\n  <li>coll<\/li>\n  <li>fixed<\/li>\n  <li>fruit<\/li>\n  <li>invert_match<\/li>\n  <li>reg<span class='match'>ex<\/span><\/li>\n  <li>sentences<\/li>\n  <li><span class='match'>str_<\/span>c<\/li>\n  <li><span class='match'>str_<\/span>conv<\/li>\n  <li><span class='match'>str_<\/span>count<\/li>\n  <li><span class='match'>str_<\/span>detect<\/li>\n  <li><span class='match'>str_<\/span>dup<\/li>\n  <li><span class='match'>str_<\/span><span class='match'>ex<\/span>tract<\/li>\n  <li><span class='match'>str_<\/span><span class='match'>ex<\/span>tract_all<\/li>\n  <li><span class='match'>str_<\/span>flatten<\/li>\n  <li><span class='match'>str_<\/span>glue<\/li>\n  <li><span class='match'>str_<\/span>glue_data<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+
+???
+  
+* I want to highlight `str_view_all` which brings up a html_widget to show matches.
+- Helpful when making a regex
+
+
+
+
+
+---
+class: center, middle, inverse
+
+# [`forcats`](https://forcats.tidyverse.org/)
+
+.footnote[
+https://forcats.tidyverse.org/
+]
+
+???
+  
+&gt;  The goal of the `forcats` package is to provide a suite of tools that solve common problems with factors, including changing the order of levels or the values. 
+
+
+---
+  
+###  Consistent manipulating of factors
+  
+  
+
+```r
+ls("package:forcats")
+```
+
+```
+ [1] "%&gt;%"             "as_factor"       "fct_anon"        "fct_c"          
+ [5] "fct_collapse"    "fct_count"       "fct_drop"        "fct_expand"     
+ [9] "fct_explicit_na" "fct_infreq"      "fct_inorder"     "fct_lump"       
+[13] "fct_other"       "fct_recode"      "fct_relabel"     "fct_relevel"    
+[17] "fct_reorder"     "fct_reorder2"    "fct_rev"         "fct_shift"      
+[21] "fct_shuffle"     "fct_unify"       "fct_unique"      "gss_cat"        
+[25] "last2"           "lvls_expand"     "lvls_reorder"    "lvls_revalue"   
+[29] "lvls_union"     
+```
+
+
+---
+
+```r
+fct_explicit_na( factor(c("A","B",NA)) )
+```
+
+```
+[1] A         B         (Missing)
+Levels: A B (Missing)
+```
+
+```r
+fct_c( factor(c("A","B") ), factor(c("B","C")) )
+```
+
+```
+[1] A B B C
+Levels: A B C
+```
+
+```r
+fct_rev( factor(c("A","B")) )
+```
+
+```
+[1] A B
+Levels: B A
+```
+
+```r
+fct_drop( factor(c("A","B", NA), levels = c("A","B","C")) )
+```
+
+```
+[1] A    B    &lt;NA&gt;
+Levels: A B
+```
+
+```r
+fct_anon (factor(c("A","B",NA)) , prefix = "cat" )
+```
+
+```
+[1] cat1 cat2 &lt;NA&gt;
+Levels: cat1 cat2
+```
+
+???
+  
+* Some forcats examples
+
+
+
+---
+
+
+class: center, middle, inverse
+
+# [`ggplot2`](https://ggplot2.tidyverse.org/)
+
+.footnote[
+https://ggplot2.tidyverse.org/
+]
+
+???
+
+* Now over 10 years old
+* Probably needs a separate presentation.
+
+
+
+
+
+
+---
+### Foundations
+
+
+.pull-left[
+&lt;img src="figs/gg.png" width=300 height=400&gt;
+]
+
+.pull-right[
+&lt;img src="figs/wilkinson.png" width=300 height=297&gt;
+]
+
+.footnote[
+http://vita.had.co.nz/papers/layered-grammar.html
+]
+
+
+
+
+---
+class: center, middle
+
+#### Data
+&lt;!-- ![](img/data.png) --&gt;
+&lt;table class="table" style="font-size: 18px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; A &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; B &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; C &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; D &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; E &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+
+.pull-left[
+
+#### Coordinate system
+&lt;!-- ![](img/coordinate_sys.png) --&gt;
+
+&lt;img src="figs/unnamed-chunk-40-1.svg" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[         
+#### Aesthetics
+
+&lt;img src="figs/unnamed-chunk-41-1.svg" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+???
+
+* The core elements of the grammar of graphics
+* Aesthetics also called "geoms"
+
+
+
+---
+class: middle
+
+
+```r
+ggplot(data = &lt;DATA&gt;) +
+  &lt;geom_function&gt;(mapping = aes(&lt;aesthetics_mappings&gt;))
+```
+
+
+---
+class: middle
+
+
+```r
+my_mtcars &lt;- mtcars %&gt;% mutate(cyl = fct_rev(factor(cyl)))
+ggplot(data = my_mtcars) +
+  geom_point(mapping = aes(x = disp, y = mpg, col = cyl))
+```
+
+&lt;img src="figs/unnamed-chunk-43-1.svg" width="100%" style="display: block; margin: auto;" /&gt;
+
+???
+
+* Notice the "pipe" is "+". But it is not a pipe
+
+
+---
+class: middle
+
+
+```r
+ggplot(data = my_mtcars) +
+  geom_point(mapping = aes(x = disp, y = mpg, col = cyl, 
+                           shape = cyl, size = hp))
+```
+
+&lt;img src="figs/unnamed-chunk-44-1.svg" width="100%" style="display: block; margin: auto;" /&gt;
+
+???
+
+The coordinate system is by default the cartesian
+
+---
+class: middle, center
+
+### More grammar...
+
+`facet`
+
+`position` 
+
+`stat`
+
+???
+
+* position e.g. maps to bar plots
+* stats: statistical transformations (mean, median, etc)
+* non-cartesian coordiante systems
+
+---
+class: middle
+
+### Grammar of layered graphics
+
+
+```r
+ggplot(data = &lt;DATA&gt;) +
+  &lt;geom_function&gt;(
+    mapping = aes(&lt;aesthetics_mappings&gt;),
+    stat = &lt;stat&gt;,
+    position = &lt;postion&gt;
+  ) +
+  &lt;coordinate_function&gt;() +
+  &lt;facet_function&gt;()
+```
+
+???
+
+* There's lots more to it...
+
+
+---
+class: middle
+
+```r
+it &lt;- map_data("italy")
+ggplot(it, mapping = aes(long, lat, group=group)) +
+  geom_polygon(color = "black", fill = "white") +
+  coord_quickmap()
+```
+
+&lt;img src="figs/unnamed-chunk-46-1.svg" width="100%" height="400px" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: middle
+
+```r
+ggplot(it, mapping = aes(long, lat, group=group, fill=region))+
+  geom_polygon(color = "black", show.legend = FALSE) +
+  coord_quickmap()
+```
+
+&lt;img src="figs/unnamed-chunk-47-1.svg" width="100%" height="400px" style="display: block; margin: auto;" /&gt;
+
+---
+class: middle
+
+```r
+ggplot(it %&gt;% filter(group &lt;= 6), 
+       mapping = aes(long, lat, group = group, fill = region))+
+  geom_polygon(color = "black", show.legend = FALSE) +
+  coord_quickmap() +
+  facet_wrap(~ region)
+```
+
+&lt;img src="figs/unnamed-chunk-48-1.svg" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+class: inverse, center, middle
+
+# More help
+
+.left[
+* Within R studio: `Help &gt; Cheatsheet`
+* The [R for Data Science](https://r4ds.had.co.nz/) book [1]
+]
+
+.footnote[
+[1] https://r4ds.had.co.nz/
+]
+
+???
+
+Again searching the internet gets you help nearly all the time.
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
