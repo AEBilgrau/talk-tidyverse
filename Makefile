@@ -2,7 +2,7 @@
 # Makefile for talk-tidyverse --------------------------------------------------
 
 # Main file
-SLIDES = talk-tidyverse
+SLIDES = index
 
 # Directories
 SUBDIR = input

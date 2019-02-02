@@ -16,6 +16,7 @@ output:
 
 ---
 ```{r setup, include=FALSE}
+set.seed(521924934)
 options(htmltools.dir.version = FALSE,
         width = 80)
 pkggraph::init(local = TRUE)

@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 # <font size='3'>An introduction to</font>
 ## <code>tidyverse</code>
 ### <a href='https://github.com/AEBilgrau'>Anders Ellern Bilgrau</a>
-### <font size='3'>User group meeting 2019-01-28</font><br><font size='1'>(last updated: 2019-01-30)</font>
+### <font size='3'>User group meeting 2019-01-28</font><br><font size='1'>(last updated: 2019-02-02)</font>
 
 ---
 
@@ -78,7 +78,7 @@ library(tidyverse)
 ```
 
 ```
-  -- Attaching packages ------------------------------------------------------------------------ tidyverse 1.2.1 --
+  -- Attaching packages ----------------------------------------------------------------------- tidyverse 1.2.1 --
 ```
 
 ```
@@ -89,7 +89,7 @@ library(tidyverse)
 ```
 
 ```
-  -- Conflicts --------------------------------------------------------------------------- tidyverse_conflicts() --
+  -- Conflicts -------------------------------------------------------------------------- tidyverse_conflicts() --
   x dplyr::filter() masks stats::filter()
   x dplyr::lag()    masks stats::lag()
 ```
@@ -121,8 +121,8 @@ class: center
 
 #### The `tidyverse` dependencies
 
-<div id="htmlwidget-874614f49fdbfec82ded" style="width:750px;height:450px;" class="forceNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-874614f49fdbfec82ded">{"x":{"links":{"source":[0,0,0,0,0,0,0,0,0,1,1,2,2,2,2,2,2,2,2,2,3,3,3,4,4,4,4,5,5,6,6,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8],"target":[9,10,11,12,13,14,15,16,6,6,12,17,18,19,20,21,22,23,6,24,12,6,14,16,6,25,15,26,12,14,16,0,11,12,3,14,16,26,6,27,28,0,1,2,29,30,25,31,32,12,33,3,4,34,5,6,35,7,36],"value":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"colour":["#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF"]},"nodes":{"name":["dplyr","forcats","ggplot2","purrr","readr","stringr","tibble","tidyr","tidyverse","assertthat","bindrcpp","glue","magrittr","pkgconfig","rlang","R6","Rcpp","digest","grid","gtable","MASS","plyr","reshape2","scales","lazyeval","hms","stringi","tidyselect","broom","haven","httr","jsonlite","lubridate","modelr","readxl","rvest","xml2"],"group":[4,4,4,4,4,4,4,4,6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],"nodesize":[4,4,4,4,4,4,4,4,6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]},"options":{"NodeID":"nName","Group":"group","colourScale":"d3.scaleOrdinal(d3.schemeCategory20);","fontSize":14,"fontFamily":"serif","clickTextSize":35,"linkDistance":65,"linkWidth":"function(d) { return Math.sqrt(d.value); }","charge":-200,"opacity":1,"zoom":true,"legend":false,"arrows":true,"nodesize":true,"radiusCalculation":"7","bounded":true,"opacityNoHover":1,"clickAction":" d3.select(this).select(\"circle\")\n  .transition().duration(750).attr(\"r\", 20)"}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b24baa7e4fe6c5a8b3a6" style="width:750px;height:450px;" class="forceNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b24baa7e4fe6c5a8b3a6">{"x":{"links":{"source":[0,0,0,0,0,0,0,0,0,1,1,2,2,2,2,2,2,2,2,2,3,3,3,4,4,4,4,5,5,6,6,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8],"target":[9,10,11,12,13,14,15,16,6,6,12,17,18,19,20,21,22,23,6,24,12,6,14,16,6,25,15,26,12,14,16,0,11,12,3,14,16,26,6,27,28,0,1,2,29,30,25,31,32,12,33,3,4,34,5,6,35,7,36],"value":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"colour":["#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF","#1B00FF"]},"nodes":{"name":["dplyr","forcats","ggplot2","purrr","readr","stringr","tibble","tidyr","tidyverse","assertthat","bindrcpp","glue","magrittr","pkgconfig","rlang","R6","Rcpp","digest","grid","gtable","MASS","plyr","reshape2","scales","lazyeval","hms","stringi","tidyselect","broom","haven","httr","jsonlite","lubridate","modelr","readxl","rvest","xml2"],"group":[4,4,4,4,4,4,4,4,6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],"nodesize":[4,4,4,4,4,4,4,4,6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]},"options":{"NodeID":"nName","Group":"group","colourScale":"d3.scaleOrdinal(d3.schemeCategory20);","fontSize":14,"fontFamily":"serif","clickTextSize":35,"linkDistance":65,"linkWidth":"function(d) { return Math.sqrt(d.value); }","charge":-200,"opacity":1,"zoom":true,"legend":false,"arrows":true,"nodesize":true,"radiusCalculation":"7","bounded":true,"opacityNoHover":1,"clickAction":" d3.select(this).select(\"circle\")\n  .transition().duration(750).attr(\"r\", 20)"}},"evals":[],"jsHooks":[]}</script>
 
 .left[
 Press `ctrl`+`R` or `F5`
@@ -1372,8 +1372,8 @@ ls("package:stringr") %&gt;% head(n = 18) %&gt;%
 str_view_all("str_|ex")
 ```
 
-<div id="htmlwidget-08eba7e0b7bc19d31d0a" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-08eba7e0b7bc19d31d0a">{"x":{"html":"<ul>\n  <li>%>%<\/li>\n  <li>boundary<\/li>\n  <li>coll<\/li>\n  <li>fixed<\/li>\n  <li>fruit<\/li>\n  <li>invert_match<\/li>\n  <li>reg<span class='match'>ex<\/span><\/li>\n  <li>sentences<\/li>\n  <li><span class='match'>str_<\/span>c<\/li>\n  <li><span class='match'>str_<\/span>conv<\/li>\n  <li><span class='match'>str_<\/span>count<\/li>\n  <li><span class='match'>str_<\/span>detect<\/li>\n  <li><span class='match'>str_<\/span>dup<\/li>\n  <li><span class='match'>str_<\/span><span class='match'>ex<\/span>tract<\/li>\n  <li><span class='match'>str_<\/span><span class='match'>ex<\/span>tract_all<\/li>\n  <li><span class='match'>str_<\/span>flatten<\/li>\n  <li><span class='match'>str_<\/span>glue<\/li>\n  <li><span class='match'>str_<\/span>glue_data<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b88459fde608ea982e9e" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b88459fde608ea982e9e">{"x":{"html":"<ul>\n  <li>%>%<\/li>\n  <li>boundary<\/li>\n  <li>coll<\/li>\n  <li>fixed<\/li>\n  <li>fruit<\/li>\n  <li>invert_match<\/li>\n  <li>reg<span class='match'>ex<\/span><\/li>\n  <li>sentences<\/li>\n  <li><span class='match'>str_<\/span>c<\/li>\n  <li><span class='match'>str_<\/span>conv<\/li>\n  <li><span class='match'>str_<\/span>count<\/li>\n  <li><span class='match'>str_<\/span>detect<\/li>\n  <li><span class='match'>str_<\/span>dup<\/li>\n  <li><span class='match'>str_<\/span><span class='match'>ex<\/span>tract<\/li>\n  <li><span class='match'>str_<\/span><span class='match'>ex<\/span>tract_all<\/li>\n  <li><span class='match'>str_<\/span>flatten<\/li>\n  <li><span class='match'>str_<\/span>glue<\/li>\n  <li><span class='match'>str_<\/span>glue_data<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 ???
   
