@@ -5,7 +5,7 @@ User Group meeting 28-jan-2019. Most of the content has been borrowed
 or strongly inspired from
 [tidyverse.org](https://tidyverse.org).
 
-The slides are available online at https://aalborgrub.github.io/talk-tidyverse
+The slides are available online at https://aalborgrug.github.io/talk-tidyverse/
 
 ### How to compile the presentation
 
