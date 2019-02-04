@@ -133,7 +133,7 @@ ggplot(data = my_mtcars) +
 
 ???
 
-The coordinate system is by default the cartesian
+The coordinate system is by default the Cartesian
 
 ---
 class: middle, center
@@ -150,7 +150,7 @@ class: middle, center
 
 * position e.g. maps to bar plots
 * stats: statistical transformations (mean, median, etc)
-* non-cartesian coordiante systems
+* non-Cartesian coordinate systems
 
 ---
 class: middle

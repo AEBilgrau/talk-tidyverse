@@ -21,7 +21,7 @@ https://tidyr.tidyverse.org/
 ---
 ### Key tidyr functions
 
-* `gather()`: *gathers* ultiple columns into two key-value columns
+* `gather()`: *gathers* multiple columns into two key-value columns
   - i.e. wide to long format
 
 * `spread()`: *spreads* two columns (key & value) into multiple columns
@@ -43,7 +43,7 @@ https://tidyr.tidyverse.org/
 ### Other tidying
 #### Handle missing values
 * `drop_na()`  filters `NA`
-* `fill()`  fills `NA` with most recent non-`NA` (from top og bottom)
+* `fill()`  fills `NA` with most recent non-`NA` (from top and bottom)
 * `replace_na()`
 * `complete()`: Expand current tibble to make missing values explicit
 * `expand()`: Creates a new tibble (like `expand.grid`)

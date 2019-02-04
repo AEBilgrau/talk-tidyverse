@@ -8,7 +8,7 @@ https://dplyr.tidyverse.org/
 
 ???
 
-* dplyr is a grammar of data maninulation *on tidy data*
+* dplyr is a grammar of data manipulation *on tidy data*
 * (Relatively) consistent
 * Provide few 'verbs' to do most things --- one-way philosophy
 * Fast, not not built for speed. `data.table` might be better here.
@@ -22,7 +22,7 @@ From the docs:pp
 ---
 ### dplyr overview
 
-Core functionalty:
+Core functionality:
 
 * `select()` columns
 * `filter()` rows
@@ -124,7 +124,7 @@ mtcars %>%
 
 * Doing the above it "[" would be a nightmare in comparison
 * Again lazy evaluation, in order is generally supported.
-* 'Context-refence' (NSE as Janus talked about last time)
+* 'Context-reference' (NSE as Janus talked about last time)
 
 ---
 class: center, middle
@@ -137,7 +137,7 @@ https://dbplyr.tidyverse.org/
 
 ???
 
-* `dbplyr` is a database backend for `dplyr`
+* `dbplyr` is a database back-end for `dplyr`
 * Unlike "[", it abstracts away how the data is stored
 * Converts `dplyr` code to SQL calls
 * Expressions are lazily evaluated and `dplyr` pipes generate SQL, which is sent to the DB only when requested.

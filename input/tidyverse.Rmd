@@ -16,7 +16,7 @@ https://tidyverse.tidyverse.org/
 The definitive guide and descriptions are found at tidyverse.org.  In fact, the majority of this presentation is borrowed from the official sources.
 If you need 1 take home message, it should be "tidyverse.org"
 
-The content on the intenet is great.
+The content on the internet is great.
 I should also disclaim, that I am no `tidyverse` expert.
 I read (some of) this stuff so you do not have to.
 
@@ -53,7 +53,7 @@ tidyverse_logo()
 Tidyverse is simply a collection of 8 core package with which share common design principles.
 Or, more bluntly out: 'all the nice stuff from Hadley Wickham and co. at Rstudio'.
 
-Each package probably warrents it's one presentation.
+Each package probably warrants it's one presentation.
 
 
 
@@ -83,7 +83,7 @@ Press `ctrl`+`R` or `F5`
 
 * "There should be one, and preferably only one, obvious way to do it."
 
-    * The **R** core team's philosophy is fundamentatlly different.
+    * The **R** core team's philosophy is fundamentally different.
 
 .footnote[
 https://principles.tidyverse.org/ <br>
@@ -116,7 +116,7 @@ Wickham, H. (2014). Tidy Data. Journal of Statistical Software, 59(10), 1-23. do
 
 ???
 
-* Speaks only toward 'rectcangular data' --- there is lots of data that is not naturally rectangular.
+* Speaks only toward 'rectangular data' --- there is lots of data that is not naturally rectangular.
 * Some 80% of data analysis is used on cleaning and preparing data (Dasu and Johnson 2003)
 * You feel that the 1--2 is tautological, but if you think long-vs-wide tables it should be apparent it is not.
 * It is sometimes surprisingly difficult to precisely define variables and observations.
@@ -182,7 +182,7 @@ head(subset(iris, Species=="setosa", select = names(iris)[-4]), n=2)
 ???
 
 Called the pipe operator; performs function composition.
-From the pacakge `magrittr`; adopted by `tidyverse`.
+From the package `magrittr`; adopted by `tidyverse`.
 Can give some expressive code by daisy chaining pipes.
 The dot `.` can be used as placeholder to place the left hand size elsewhere or use
 the `value` for other purposes.
