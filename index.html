@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 # <font size='3'>An introduction to</font>
 ## <code>tidyverse</code>
 ### <a href='https://github.com/AEBilgrau'>Anders Ellern Bilgrau</a>
-### <font size='3'>User group meeting 2019-01-28</font><br><font size='1'>(last updated: 2019-02-02)</font>
+### <font size='3'>User group meeting 2019-01-28</font><br><font size='1'>(last updated: 2019-02-04)</font>
 
 ---
 
@@ -46,7 +46,7 @@ https://tidyverse.tidyverse.org/
 The definitive guide and descriptions are found at tidyverse.org.  In fact, the majority of this presentation is borrowed from the official sources.
 If you need 1 take home message, it should be "tidyverse.org"
 
-The content on the intenet is great.
+The content on the internet is great.
 I should also disclaim, that I am no `tidyverse` expert.
 I read (some of) this stuff so you do not have to.
 
@@ -78,7 +78,7 @@ library(tidyverse)
 ```
 
 ```
-  -- Attaching packages ----------------------------------------------------------------------- tidyverse 1.2.1 --
+  -- Attaching packages -------------------------------------------------------- tidyverse 1.2.1 --
 ```
 
 ```
@@ -89,7 +89,7 @@ library(tidyverse)
 ```
 
 ```
-  -- Conflicts -------------------------------------------------------------------------- tidyverse_conflicts() --
+  -- Conflicts ----------------------------------------------------------- tidyverse_conflicts() --
   x dplyr::filter() masks stats::filter()
   x dplyr::lag()    masks stats::lag()
 ```
@@ -112,7 +112,7 @@ tidyverse_logo()
 Tidyverse is simply a collection of 8 core package with which share common design principles.
 Or, more bluntly out: 'all the nice stuff from Hadley Wickham and co. at Rstudio'.
 
-Each package probably warrents it's one presentation.
+Each package probably warrants it's one presentation.
 
 
 
@@ -141,7 +141,7 @@ Press `ctrl`+`R` or `F5`
 
 * "There should be one, and preferably only one, obvious way to do it."
 
-    * The **R** core team's philosophy is fundamentatlly different.
+    * The **R** core team's philosophy is fundamentally different.
 
 .footnote[
 https://principles.tidyverse.org/ &lt;br&gt;
@@ -174,7 +174,7 @@ Wickham, H. (2014). Tidy Data. Journal of Statistical Software, 59(10), 1-23. do
 
 ???
 
-* Speaks only toward 'rectcangular data' --- there is lots of data that is not naturally rectangular.
+* Speaks only toward 'rectangular data' --- there is lots of data that is not naturally rectangular.
 * Some 80% of data analysis is used on cleaning and preparing data (Dasu and Johnson 2003)
 * You feel that the 1--2 is tautological, but if you think long-vs-wide tables it should be apparent it is not.
 * It is sometimes surprisingly difficult to precisely define variables and observations.
@@ -265,7 +265,7 @@ head(subset(iris, Species=="setosa", select = names(iris)[-4]), n=2)
 ???
 
 Called the pipe operator; performs function composition.
-From the pacakge `magrittr`; adopted by `tidyverse`.
+From the package `magrittr`; adopted by `tidyverse`.
 Can give some expressive code by daisy chaining pipes.
 The dot `.` can be used as placeholder to place the left hand size elsewhere or use
 the `value` for other purposes.
@@ -509,7 +509,7 @@ https://dplyr.tidyverse.org/
 
 ???
 
-* dplyr is a grammar of data maninulation *on tidy data*
+* dplyr is a grammar of data manipulation *on tidy data*
 * (Relatively) consistent
 * Provide few 'verbs' to do most things --- one-way philosophy
 * Fast, not not built for speed. `data.table` might be better here.
@@ -523,7 +523,7 @@ From the docs:pp
 ---
 ### dplyr overview
 
-Core functionalty:
+Core functionality:
 
 * `select()` columns
 * `filter()` rows
@@ -774,7 +774,7 @@ mtcars %&gt;%
 
 * Doing the above it "[" would be a nightmare in comparison
 * Again lazy evaluation, in order is generally supported.
-* 'Context-refence' (NSE as Janus talked about last time)
+* 'Context-reference' (NSE as Janus talked about last time)
 
 ---
 class: center, middle
@@ -787,7 +787,7 @@ https://dbplyr.tidyverse.org/
 
 ???
 
-* `dbplyr` is a database backend for `dplyr`
+* `dbplyr` is a database back-end for `dplyr`
 * Unlike "[", it abstracts away how the data is stored
 * Converts `dplyr` code to SQL calls
 * Expressions are lazily evaluated and `dplyr` pipes generate SQL, which is sent to the DB only when requested.
@@ -818,7 +818,7 @@ https://tidyr.tidyverse.org/
 ---
 ### Key tidyr functions
 
-* `gather()`: *gathers* ultiple columns into two key-value columns
+* `gather()`: *gathers* multiple columns into two key-value columns
   - i.e. wide to long format
 
 * `spread()`: *spreads* two columns (key &amp; value) into multiple columns
@@ -840,7 +840,7 @@ https://tidyr.tidyverse.org/
 ### Other tidying
 #### Handle missing values
 * `drop_na()`  filters `NA`
-* `fill()`  fills `NA` with most recent non-`NA` (from top og bottom)
+* `fill()`  fills `NA` with most recent non-`NA` (from top and bottom)
 * `replace_na()`
 * `complete()`: Expand current tibble to make missing values explicit
 * `expand()`: Creates a new tibble (like `expand.grid`)
@@ -1627,7 +1627,7 @@ ggplot(data = my_mtcars) +
 
 ???
 
-The coordinate system is by default the cartesian
+The coordinate system is by default the Cartesian
 
 ---
 class: middle, center
@@ -1644,7 +1644,7 @@ class: middle, center
 
 * position e.g. maps to bar plots
 * stats: statistical transformations (mean, median, etc)
-* non-cartesian coordiante systems
+* non-Cartesian coordinate systems
 
 ---
 class: middle
